@@ -5,9 +5,12 @@ import jwt
 import bcrypt
 from datetime import datetime, timedelta
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, JWTManager
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app)
+
 app.config['SECRET_KEY'] = 'your-secret-key'
 app.config['MONGO_URI'] = 'mongodb+srv://admin:spm100@cluster0.qgb6fhm.mongodb.net/squadup'
 
@@ -16,6 +19,7 @@ api = Api(app)
 jwtManager = JWTManager(app)
 
 @app.route('/', methods=['GET'])
+@jwt_required()
 def hello():
     return {'message': "Hello!"}
 
@@ -51,7 +55,7 @@ class Login(Resource):
             access_token = create_access_token(identity=user['username'])
 
             # Return the Bearer token in the response
-            return {'access_token': access_token, 'token_type': 'Bearer'}
+            return {'token': access_token, 'token_type': 'Bearer'}
 
         return {'message': 'Invalid username or password'}, 401
     
@@ -59,7 +63,6 @@ class Login(Resource):
 @jwt_required()
 def get_user(username):
     return f"User Profile: {username}"
-
    
 api.add_resource(Register, '/register')
 api.add_resource(Login, '/login')
