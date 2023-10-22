@@ -23,7 +23,7 @@ jwtManager = JWTManager(app)
 def hello():
     return {'message': "Hello!"}
 
-# Register and Login API endpoints will go here.
+# Profile Endpoints
 class Register(Resource):
     def post(self):
         parser = reqparse.RequestParser()
@@ -59,10 +59,9 @@ class Login(Resource):
 
         return {'message': 'Invalid username or password'}, 401
     
-@app.route('/user/<username>', methods=['GET'])
-@jwt_required()
-def get_user(username):
-    return f"User Profile: {username}"
+# Group Endpoints
+
+# Event Endpoints
    
 api.add_resource(Register, '/register')
 api.add_resource(Login, '/login')

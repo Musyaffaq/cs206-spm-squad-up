@@ -15,6 +15,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import ThemeToggle from "./ThemeToggle";
 
 // const pages = ["Products", "Pricing", "Blog"];
 const settings = [
@@ -165,6 +166,7 @@ function ResponsiveAppBar() {
               ))}
             </Menu>
           </Box>
+          <ThemeToggle />
         </Toolbar>
       </Container>
     </AppBar>
