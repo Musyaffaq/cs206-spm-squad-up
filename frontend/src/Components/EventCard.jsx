@@ -8,14 +8,24 @@ import {
 } from "@mui/material";
 import React from "react";
 
-function EventCard() {
+const cardStyles = {
+  width: '600px', 
+  height: '300px',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexwrap: 'wrap',
+};
+
+function EventCard({ eventData }) {
   return (
-    <Grid item xs={2}>
+    <Grid item xs={2.5} style={cardStyles}>
       <Card>
         <CardContent>
-          <Typography>Event 1</Typography>
-          <Typography>Information</Typography>
-          <Typography>More Information</Typography>
+          <Typography>{eventData.title}</Typography>
+          <img src={eventData.image} alt={eventData.title} width="140" height="110" />
+          <Typography>{eventData.information}</Typography>
         </CardContent>
         <CardActions>
           <Button size="small">See More</Button>

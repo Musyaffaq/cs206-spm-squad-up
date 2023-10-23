@@ -1,0 +1,11 @@
+.display-event-card {
+    margin-top: 20px; /* Adjust the distance down */
+    margin-left: 15px; /* Adjust the distance to the right */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    gap: 20px; /* Adjust the spacing between cards */
+  }
+  
+  /* Define any additional styles for cards or their containers */
+  
