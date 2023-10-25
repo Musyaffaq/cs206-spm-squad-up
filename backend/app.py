@@ -58,14 +58,36 @@ class Login(Resource):
             return {'token': access_token, 'token_type': 'Bearer'}
 
         return {'message': 'Invalid username or password'}, 401
-    
+
 # Group Endpoints
 
 # Event Endpoints
-   
+class CreateEvent(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('eventName', required=True)
+
+        args = parser.parse_args()
+
+        existing_event = mongo.db.event.find_one({'id': args['eventName']})
+
+        if existing_event:
+            return {'message': 'Event already exists'}, 400
+
+        event_id = mongo.db.event.insert_one({'EventName':  args['eventName']})
+
+        return {'message': 'Event added'}, 401
+
+@app.route('/get-all-events', methods=['GET'])
+@jwt_required()
+def GetAllEvent():
+    events = list(mongo.db.event.find({}))
+    event_names = [event['EventName'] for event in events]
+    return {'events': event_names}, 200
+
 api.add_resource(Register, '/register')
 api.add_resource(Login, '/login')
-
+api.add_resource(CreateEvent, '/create-event')
 
 if __name__ == '__main__':
     app.run(debug=True)
