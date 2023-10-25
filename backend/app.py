@@ -58,14 +58,61 @@ class Login(Resource):
             return {'token': access_token, 'token_type': 'Bearer'}
 
         return {'message': 'Invalid username or password'}, 401
-    
-# Group Endpoints
+
+# Squad Endpoints
+class CreateSquad(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('squadName', required=True)
+        parser.add_argument('leaderID', required=True)
+        parser.add_argument('eventID', required=True)
+
+        args = parser.parse_args()
+
+        existing_squad = mongo.db.event.find_one({'id': args['squadName']})
+
+        if existing_squad:
+            return {'message': 'Squad already exists'}, 400
+
+        squad_id = mongo.db.squad.insert_one({'squadName':  args['squadName'], 'leaderID':  args['leaderID'], 'eventID':  args['eventID']})
+
+        return {'message': 'Squad added'}, 401
+
+@app.route('/get-all-squad', methods=['GET'])
+@jwt_required()
+def GetAllSquads():
+    squads = list(mongo.db.squad.find({}))
+    squad_names = [squad['squadName'] for squad in squads]
+    return {'squad': squad_names}, 200
 
 # Event Endpoints
-   
+class CreateEvent(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('eventName', required=True)
+
+        args = parser.parse_args()
+
+        existing_event = mongo.db.event.find_one({'id': args['eventName']})
+
+        if existing_event:
+            return {'message': 'Event already exists'}, 400
+
+        event_id = mongo.db.event.insert_one({'EventName':  args['eventName']})
+
+        return {'message': 'Event added'}, 401
+
+@app.route('/get-all-events', methods=['GET'])
+@jwt_required()
+def GetAllEvent():
+    events = list(mongo.db.event.find({}))
+    event_names = [event['EventName'] for event in events]
+    return {'events': event_names}, 200
+
 api.add_resource(Register, '/register')
 api.add_resource(Login, '/login')
-
+api.add_resource(CreateEvent, '/create-event')
+api.add_resource(CreateSquad, '/create-squad')
 
 if __name__ == '__main__':
     app.run(debug=True)
