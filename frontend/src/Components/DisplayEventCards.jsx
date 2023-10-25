@@ -1,5 +1,7 @@
 import React from "react";
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import {
+  Box,
   Card,
   CardActionArea,
   CardContent,
@@ -29,6 +31,18 @@ const eventDataList = [
 
 
 function DisplayEventCards() {
+  const cardActionAreaStyle = {
+    height: '267px',
+    width: '90px',
+    alignItems: 'center',
+    justifyContent: 'center',
+  };
+  const buttonStyle = {
+    height: '222px',
+    width: '60px',
+    alignItems: 'center',
+    justifyContent: 'center',
+  };
   return (
     <div  className="display-event-card">
       <>
@@ -36,11 +50,13 @@ function DisplayEventCards() {
         <EventCard key={index} eventData={eventData} />
       ))}
       </>
-      <Grid item xs={2}>
-        <CardActionArea>
-          <Card>
-            <CardContent>
-              <Typography align="center">See More</Typography>
+      <Grid item xs={2} >
+        <CardActionArea style = {cardActionAreaStyle} >
+          <Card style = {cardActionAreaStyle}>
+            <CardContent justifyContent="center">
+              <Box display="flex" style = {buttonStyle}>
+                <ArrowForwardIosIcon fontSize="large" />
+              </Box>
             </CardContent>
           </Card>
         </CardActionArea>

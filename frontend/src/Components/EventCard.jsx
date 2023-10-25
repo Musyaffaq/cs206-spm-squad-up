@@ -10,9 +10,6 @@ import React from "react";
 
 const cardStyles = {
   width: '600px', 
-  height: '300px',
-  display: 'flex',
-  flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
   flexwrap: 'wrap',
