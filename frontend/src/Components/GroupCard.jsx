@@ -41,10 +41,6 @@ const cardStyles = {
   marginRight: '10px',
 };
 
-const nameStyle = {
-  marginBottom: '10px', // Add space below the name
-};
-
 const separatorStyle = {
   display: 'flex', // Use flex to arrange items in a row
   alignItems: 'center', // Align items vertically in the center
@@ -67,10 +63,10 @@ function GroupCard({ groupData }) {
       <CardActionArea style={cardStyles}>
         <Card>
           <CardContent>
-            <Typography variant="h5" style={nameStyle}>
+            <Typography variant="h5" style={{marginBottom: '2px'}}>
               {groupData.name}
             </Typography>
-            <Typography variant="h6" style={nameStyle}>
+            <Typography variant="h6" style={{marginBottom: '18px'}}>
               {groupData.hackathon}
             </Typography>
             <div style={separatorStyle}>
