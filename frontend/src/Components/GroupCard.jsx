@@ -24,10 +24,11 @@ const imageRowContainer = {
 };
 
 const cardStyles = {
-  width: '291px', 
+  width: '281px', 
   alignItems: 'center',
   justifyContent: 'space-around',
   flexwrap: 'wrap',
+  marginRight: '10px',
 };
 
 const nameStyle = {
@@ -38,7 +39,7 @@ function GroupCard( {groupData} ) {
   return (
     <Grid item xs={4.662}>
       <CardActionArea style = {cardStyles}>
-        <card>
+        <Card>
         <CardContent>
           <Typography variant="h5" style={nameStyle}>
             {groupData.name}
@@ -53,7 +54,7 @@ function GroupCard( {groupData} ) {
             <img src={groupData.member3} style={circleContainer} alt="member3" />
           </div>
         </CardContent>
-        </card>
+        </Card>
       </CardActionArea>
       
     </Grid>

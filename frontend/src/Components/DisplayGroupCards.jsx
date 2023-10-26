@@ -6,7 +6,6 @@ import {
   CardActionArea,
   CardContent,
   Grid,
-  Typography,
 } from "@mui/material";
 import GroupCard from "../Components/GroupCard";
 
