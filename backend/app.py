@@ -10,6 +10,8 @@ import datetime
 
 app = Flask(__name__)
 CORS(app)
+# CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
+# CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 app.config['SECRET_KEY'] = 'your-secret-key'
 app.config['MONGO_URI'] = 'mongodb+srv://admin:spm100@cluster0.qgb6fhm.mongodb.net/squadup'
@@ -119,9 +121,50 @@ def GetAllSquads():
     squad_names = [squad['squadName'] for squad in squads]
     return {'squad': squad_names}, 200
 
+@app.route('/get-all-users', methods=['GET'])
+@jwt_required()
+def GetAllUsers():
+    users = list(mongo.db.users.find({}))
+    users_names = [user['username'] for user in users]
+    return {'users': users_names}, 200
+
+# Filter endpoint
+class Filter(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('personality', type=str, required=True)
+        parser.add_argument('timeCommitment', type=str, required=True)
+        parser.add_argument('skillsRequired', type=list, required=True)
+
+        args = parser.parse_args()
+        personality = args['personality']
+        time_commitment = args['timeCommitment']
+        skills_required = args['skillsRequired']
+
+        users = list(mongo.db.users.find({}))
+        users_names = [user['username'] for user in users]
+
+        users = list(mongo.db.users.find({
+            'personality': personality,
+            'timeCommitment': time_commitment
+        }))
+
+        users_names2 = [user['username'] for user in users]
+
+        filtered_users = []
+        for user in users:
+            if 'skills' in user:
+                user_skills = user['skills']
+                if any(skill in user_skills for skill in skills_required):
+                    filtered_users.append(user)
+
+        return {'original': users_names, 'message': users_names2}, 201
+
 api.add_resource(Register, '/register')
 api.add_resource(Login, '/login')
 api.add_resource(CreateSquad, '/create-squad')
+api.add_resource(Filter, '/filter')
 
 if __name__ == '__main__':
     app.run(debug=True)
+    # app.run(host="localhost", port=5000)
