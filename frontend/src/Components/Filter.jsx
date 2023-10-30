@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import TimeCommitmentDropdown from './CreateSquad/TimeCommitmentDropdown';
-import SkillsDropdown from './CreateSquad/SkillsDropdown';
-import PersonalitySelect from './CreateSquad/';
+import SkillsDropdown from "../Components/CreateSquad/SkillsDropdown";
+import TimeCommitmentDropdown from "../Components/CreateSquad/TimeCommitmentDropdown";
+import Personality from "../Components/CreateSquad/Personality";
 
 
 
@@ -12,7 +12,7 @@ function Filter() {
         <div>
         <TimeCommitmentDropdown />
         <SkillsDropdown />
-        <PersonalitySelect />
+        <Personality />
         </div>
     );
 }

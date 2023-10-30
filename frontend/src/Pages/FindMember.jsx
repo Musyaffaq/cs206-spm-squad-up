@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  Box,
+  Button,
   Card,
   CardActionArea,
   CardContent,
@@ -35,9 +35,9 @@ function FindMember() {
     return (
       <>
         <div>
-          <button onClick={() => setShowFilter(!showFilter)}>
+          <Button variant="outlined" onClick={() => setShowFilter(!showFilter)}>
             {showFilter ? 'Hide Filter' : 'Show Filter'}
-          </button>
+          </Button>
           {showFilter && <Filter />}
         </div>
         <div className="display-event-card">
