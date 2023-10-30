@@ -3,24 +3,85 @@ import {
   CardContent,
   Grid,
   Typography,
-  CardActions,
-  Button,
+  CardActionArea,
 } from "@mui/material";
 import React from "react";
 
-function GroupCard() {
+const circleContainerLeader = {
+  width: '55px', 
+  height: '55px',
+  alignItems: 'center',
+  overflow: 'hidden',
+  display: 'flex',
+  borderRadius: '50%',
+  marginRight: '15px',
+};
+
+const circleContainer = {
+  width: '55px', 
+  height: '55px',
+  alignItems: 'center',
+  overflow: 'hidden',
+  display: 'flex',
+  borderRadius: '50%',
+  marginRight: '5px',
+};
+
+const imageRowContainer = {
+  display: 'flex', // Use flexbox to arrange items in a row
+  alignItems: 'center', // Align items vertically in the center
+  justifyContent: 'space-around', // Adjust as needed to control spacing
+};
+
+const cardStyles = {
+  width: '281px', 
+  alignItems: 'center',
+  justifyContent: 'space-around',
+  flexwrap: 'wrap',
+  marginRight: '10px',
+};
+
+const separatorStyle = {
+  display: 'flex', // Use flex to arrange items in a row
+  alignItems: 'center', // Align items vertically in the center
+  justifyContent: 'space-between', // Create space between leader and members
+  position: 'relative',
+};
+
+const separatorLine = {
+  content: '',
+  position: 'absolute',
+  top: 0,
+  bottom: 0,
+  left: '24%', // Position in the middle
+  borderLeft: '2px solid #333', // Adjust width and color
+};
+
+function GroupCard({ groupData }) {
   return (
-    <Grid item xs={2}>
-      <Card>
-        <CardContent>
-          <Typography>Group 1</Typography>
-          <Typography>Information</Typography>
-          <Typography>More Information</Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small">See More</Button>
-        </CardActions>
-      </Card>
+    <Grid item xs={4.662}>
+      <CardActionArea style={cardStyles}>
+        <Card>
+          <CardContent>
+            <Typography variant="h5" style={{marginBottom: '2px'}}>
+              {groupData.name}
+            </Typography>
+            <Typography variant="h6" style={{marginBottom: '18px'}}>
+              {groupData.hackathon}
+            </Typography>
+            <div style={separatorStyle}>
+              <div style={imageRowContainer}>
+                <img src={groupData.leader} style={circleContainerLeader} alt="Leader" />
+                <div style={separatorLine}></div>
+                <img src={groupData.member1} style={circleContainer} alt="member1" />
+                <img src={groupData.member2} style={circleContainer} alt="member2" />
+                <img src={groupData.member3} style={circleContainer} alt="member3" />
+              </div>
+              
+            </div>
+          </CardContent>
+        </Card>
+      </CardActionArea>
     </Grid>
   );
 }
