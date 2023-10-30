@@ -114,7 +114,18 @@ def GetAllEvent():
 def InviteMember():
     parser = reqparse.RequestParser()
     parser.add_argument('squadName', required=True)
+    parser.add_argument('memberName', required=True)
     args = parser.parse_args()
+
+    event_id = mongo.db.squad.update_one(
+        {
+            'squadName':args['squadName']
+        },
+        {
+            '$push': {'invitedMembers': args['memberName']}
+        })
+    return {'message':'Member invited'}
+
 
 
 

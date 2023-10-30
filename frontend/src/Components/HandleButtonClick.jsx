@@ -1,16 +1,18 @@
+import React, { useState } from 'react';
+import axios from 'axios';
+
 function handleButtonClick() {
-    // Make an HTTP request to your backend
-    fetch('/api/endpoint', {
-      method: 'GET', // You can change this to POST, PUT, etc., depending on your backend API
-    })
-      .then(response => response.json())
-      .then(data => {
-        // Handle the response from the backend
-        console.log(data);
-      })
-      .catch(error => {
-        // Handle errors
+    const squadName = "My Squad";
+    const memberName = "Asdfsdf";
+
+    const addUser = async () => {
+      try {
+        const response = await axios.post('/add-user', { squadName, memberName });
+      } catch (error) {
         console.error('Error:', error);
-      });
+      }
+    }
   }
+
+export default handleButtonClick;
   
