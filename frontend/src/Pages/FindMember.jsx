@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Card,
@@ -7,6 +7,7 @@ import {
   Grid,
 } from "@mui/material";
 import MemberCard from "../Components/MemberCard";
+import Filter from "../Components/Filter";
 
 
 const memberDataArr =[
@@ -29,22 +30,23 @@ const memberDataArr =[
 
 
 function FindMember() {
-    const cardActionAreaStyle = {
-        height: '180px',
-        width: '90px',
-        alignItems: 'center',
-        justifyContent: 'center',
-      };
+    const [showFilter, setShowFilter] = useState(false);
+  
     return (
-        <div className="display-event-card">
-        <>
-        {memberDataArr.map((memberData, index) => {
-            return <MemberCard key={index} memberData={memberData} />
-        })}
-        </>
+      <>
+        <div>
+          <button onClick={() => setShowFilter(!showFilter)}>
+            {showFilter ? 'Hide Filter' : 'Show Filter'}
+          </button>
+          {showFilter && <Filter />}
         </div>
-
+        <div className="display-event-card">
+          {memberDataArr.map((memberData, index) => {
+            return <MemberCard key={index} memberData={memberData} />;
+          })}
+        </div>
+      </>
     );
-}
-
-export default FindMember;
+  }
+  
+  export default FindMember;
