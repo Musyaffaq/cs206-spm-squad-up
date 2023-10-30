@@ -1,8 +1,9 @@
 import React from 'react'
+import SquadViewComponent from '../Components/SquadViewComponent'
 
 function Squad() {
   return (
-    <div>Squad</div>
+    <SquadViewComponent />
   )
 }
 
