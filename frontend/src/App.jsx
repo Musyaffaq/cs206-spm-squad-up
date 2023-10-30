@@ -18,6 +18,7 @@ import ViewEvents from "./Pages/ViewEvents";
 import Event from "./Pages/Event";
 import NoPage from "./Pages/NoPage";
 import RouteGuard from "./Util/RouteGuard";
+import FindMember from "./Pages/FindMember";
 
 import Container from "@mui/material/Container";
 
@@ -52,6 +53,7 @@ function App() {
       ? localStorage.getItem("theme") === "true"
       : true
   );
+  
 
   window.addEventListener("theme", () => {
     setTheme(localStorage.getItem("theme") === "true");
@@ -104,6 +106,12 @@ function App() {
               <Route
                 path="/events/sub-event"
                 element={<RouteGuard element={<Event />} />}
+              />
+              {/* edit to make it dynamic according to eventid */}
+              
+              <Route
+                path="/findmember"
+                element={<RouteGuard element={<FindMember />} />}
               />
               <Route path="*" element={<NoPage />} />
             </Routes>
