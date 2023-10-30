@@ -109,6 +109,16 @@ def GetAllEvent():
     event_names = [event['EventName'] for event in events]
     return {'events': event_names}, 200
 
+@app.route('/add-user', methods=['POST'])
+@jwt_required()
+def InviteMember():
+    parser = reqparse.RequestParser()
+    parser.add_argument('squadName', required=True)
+    args = parser.parse_args()
+
+
+
+
 api.add_resource(Register, '/register')
 api.add_resource(Login, '/login')
 api.add_resource(CreateEvent, '/create-event')
