@@ -69,7 +69,6 @@ function App() {
               <Route path="/" element={<RouteGuard element={<Homepage />} />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/login" element={<Login />} />
-
               <Route
                 path="/profiles"
                 element={<RouteGuard element={<ViewProfiles />} />}

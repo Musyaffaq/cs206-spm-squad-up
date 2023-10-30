@@ -1,13 +1,35 @@
 import React from "react";
 import { useState } from "react";
-import { Container, Paper, Typography, TextField, Button } from "@mui/material";
+import {
+  Container,
+  Paper,
+  Typography,
+  TextField,
+  Button,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
-function LoginComponent() {
+function RegisterComponent() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const handleLogin = async () => {
     const data = {
@@ -20,14 +42,18 @@ function LoginComponent() {
     };
 
     try {
-      const response = await axios.post("http://localhost:5000/login", data, {
-        headers,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/register",
+        data,
+        {
+          headers,
+        }
+      );
 
       // Successful login
-      console.log(response.data.token);
-      sessionStorage.setItem("token", response.data.token);
-      navigate("/");
+      console.log("Successfully Created Account!");
+      console.log(response.data);
+      handleClick();
 
       // Redirect or perform other actions as needed.
     } catch (error) {
@@ -40,7 +66,7 @@ function LoginComponent() {
     <Container maxWidth="xs">
       <Paper elevation={3} style={{ padding: "2rem", marginTop: "2rem" }}>
         <Typography variant="h4" align="center" gutterBottom>
-          Login
+          Sign Up
         </Typography>
         <form>
           <TextField
@@ -70,15 +96,20 @@ function LoginComponent() {
           </Button>
           <br />
           <br />
-          <Link to="/signup">
+          <Link to="/login">
             <Button variant="contained" fullWidth>
-              Register Page
+              Log In Page
             </Button>
           </Link>
         </form>
       </Paper>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
+          Account Successfully Created! You can login now!
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }
 
-export default LoginComponent;
+export default RegisterComponent;

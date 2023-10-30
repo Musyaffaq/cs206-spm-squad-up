@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import { useState } from "react";
+import { Container, Paper, Typography, TextField, Button } from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import RegisterComponent from "../Components/RegisterComponent";
 
 function SignUp() {
-  return (
-    <div>SignUp</div>
-  )
+  return <RegisterComponent />;
 }
 
-export default SignUp
+export default SignUp;
