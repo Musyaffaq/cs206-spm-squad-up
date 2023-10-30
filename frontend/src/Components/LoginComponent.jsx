@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Container, Paper, Typography, TextField, Button } from "@mui/material";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function LoginComponent() {
   const [username, setUsername] = useState("");
@@ -68,6 +68,13 @@ function LoginComponent() {
           >
             Log In
           </Button>
+          <br />
+          <br />
+          <Link to="/signup">
+            <Button variant="contained" fullWidth>
+              Register Page
+            </Button>
+          </Link>
         </form>
       </Paper>
     </Container>
