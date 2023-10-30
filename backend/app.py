@@ -8,7 +8,6 @@ from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_tok
 from flask_cors import CORS
 import datetime
 
-
 app = Flask(__name__)
 CORS(app)
 
@@ -28,8 +27,12 @@ def hello():
 class Register(Resource):
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('username', required=True)  
+        parser.add_argument('username', required=True)
         parser.add_argument('password', required=True)
+        parser.add_argument('skills', type=list, location='json')  # List of skills
+        parser.add_argument('personality', type=str)
+        parser.add_argument('timeCommitment', type=int)
+
         args = parser.parse_args()
 
         existing_user = mongo.db.users.find_one({'username': args['username']})
@@ -38,10 +41,18 @@ class Register(Resource):
             return {'message': 'Username already exists'}, 400
 
         hashed_password = bcrypt.hashpw(args['password'].encode('utf-8'), bcrypt.gensalt())
-        user_id = mongo.db.users.insert_one({'username': args['username'], 'password': hashed_password})
+        user_data = {
+            'username': args['username'],
+            'password': hashed_password,
+            'skills': args.get('skills', []),
+            'personality': args.get('personality', ''),
+            'timeCommitment': args.get('timeCommitment', 0),
+        }
+
+        user_id = mongo.db.users.insert_one(user_data)
 
         return {'message': 'User registered successfully'}, 201
-    
+
 class Login(Resource):
     def post(self):
         parser = reqparse.RequestParser()
