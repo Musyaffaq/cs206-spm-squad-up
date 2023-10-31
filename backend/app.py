@@ -80,11 +80,11 @@ class CreateSquad(Resource):
         parser.add_argument('squadName', type=str, required=True)
         parser.add_argument('leaderID', type=str, required=True)
         parser.add_argument('eventName', type=str, required=True)
-        parser.add_argument('skillsRequired', type=list, location='json')
-        parser.add_argument('fromDate', type=str)  # Assuming the date is passed as a string
-        parser.add_argument('toDate', type=str)  # Assuming the date is passed as a string
-        parser.add_argument('timeCommitment', type=int)
-        parser.add_argument('personality', type=str)
+        parser.add_argument('skillsRequired', type=str, action='append', required=True)
+        parser.add_argument('fromDate', type=str, required=True)  # Assuming the date is passed as a string
+        parser.add_argument('toDate', type=str, required=True)  # Assuming the date is passed as a string
+        parser.add_argument('timeCommitment', type=int, required=True)
+        parser.add_argument('personality', type=str, required=True)
 
         args = parser.parse_args()
 
