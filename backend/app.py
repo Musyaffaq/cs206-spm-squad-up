@@ -133,32 +133,23 @@ class Filter(Resource):
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument('personality', type=str, required=True)
-        parser.add_argument('timeCommitment', type=str, required=True)
-        parser.add_argument('skillsRequired', type=list, required=True)
+        parser.add_argument('timeCommitment', type=int, required=True)
+        parser.add_argument('skillsRequired', type=str, action='append', required=True)
 
         args = parser.parse_args()
         personality = args['personality']
         time_commitment = args['timeCommitment']
         skills_required = args['skillsRequired']
 
-        users = list(mongo.db.users.find({}))
-        users_names = [user['username'] for user in users]
-
         users = list(mongo.db.users.find({
             'personality': personality,
-            'timeCommitment': time_commitment
+            'timeCommitment': time_commitment,
+            'skills': {"$in" : skills_required}
         }))
 
-        users_names2 = [user['username'] for user in users]
+        users_names = [user['username'] for user in users]
 
-        filtered_users = []
-        for user in users:
-            if 'skills' in user:
-                user_skills = user['skills']
-                if any(skill in user_skills for skill in skills_required):
-                    filtered_users.append(user)
-
-        return {'original': users_names, 'message': users_names2}, 201
+        return {'message': users_names}, 201
 
 api.add_resource(Register, '/register')
 api.add_resource(Login, '/login')
@@ -167,4 +158,3 @@ api.add_resource(Filter, '/filter')
 
 if __name__ == '__main__':
     app.run(debug=True)
-    # app.run(host="localhost", port=5000)
