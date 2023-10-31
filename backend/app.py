@@ -6,10 +6,12 @@ import bcrypt
 from datetime import datetime, timedelta
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, JWTManager
 from flask_cors import CORS
-
+import datetime
 
 app = Flask(__name__)
 CORS(app)
+# CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
+# CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 app.config['SECRET_KEY'] = 'your-secret-key'
 app.config['MONGO_URI'] = 'mongodb+srv://admin:spm100@cluster0.qgb6fhm.mongodb.net/squadup'
@@ -27,8 +29,12 @@ def hello():
 class Register(Resource):
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('username', required=True)  
+        parser.add_argument('username', required=True)
         parser.add_argument('password', required=True)
+        parser.add_argument('skills', type=list, location='json')  # List of skills
+        parser.add_argument('personality', type=str)
+        parser.add_argument('timeCommitment', type=int)
+
         args = parser.parse_args()
 
         existing_user = mongo.db.users.find_one({'username': args['username']})
@@ -37,10 +43,18 @@ class Register(Resource):
             return {'message': 'Username already exists'}, 400
 
         hashed_password = bcrypt.hashpw(args['password'].encode('utf-8'), bcrypt.gensalt())
-        user_id = mongo.db.users.insert_one({'username': args['username'], 'password': hashed_password})
+        user_data = {
+            'username': args['username'],
+            'password': hashed_password,
+            'skills': args.get('skills', []),
+            'personality': args.get('personality', ''),
+            'timeCommitment': args.get('timeCommitment', 0),
+        }
+
+        user_id = mongo.db.users.insert_one(user_data)
 
         return {'message': 'User registered successfully'}, 201
-    
+
 class Login(Resource):
     def post(self):
         parser = reqparse.RequestParser()
@@ -63,20 +77,42 @@ class Login(Resource):
 class CreateSquad(Resource):
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('squadName', required=True)
-        parser.add_argument('leaderID', required=True)
-        parser.add_argument('eventID', required=True)
+        parser.add_argument('squadName', type=str, required=True)
+        parser.add_argument('leaderID', type=str, required=True)
+        parser.add_argument('eventName', type=str, required=True)
+        parser.add_argument('skillsRequired', type=list, location='json')
+        parser.add_argument('fromDate', type=str)  # Assuming the date is passed as a string
+        parser.add_argument('toDate', type=str)  # Assuming the date is passed as a string
+        parser.add_argument('timeCommitment', type=int)
+        parser.add_argument('personality', type=str)
 
         args = parser.parse_args()
 
-        existing_squad = mongo.db.event.find_one({'id': args['squadName']})
+        existing_squad = mongo.db.squad.find_one({'squadName': args['squadName']})
 
         if existing_squad:
             return {'message': 'Squad already exists'}, 400
 
-        squad_id = mongo.db.squad.insert_one({'squadName':  args['squadName'], 'leaderID':  args['leaderID'], 'eventID':  args['eventID']})
+        # Assuming you have a date format that you need to convert from string to a datetime object
+        from_date = datetime.datetime.strptime(args['fromDate'], '%Y-%m-%d') if args['fromDate'] else None
+        to_date = datetime.datetime.strptime(args['toDate'], '%Y-%m-%d') if args['toDate'] else None
 
-        return {'message': 'Squad added'}, 401
+        squad_data = {
+            'squadName': args['squadName'],
+            'leaderID': args['leaderID'],
+            'eventName': args['eventName'],
+            'skillsRequired': args.get('skillsRequired', []),
+            'fromDate': from_date,
+            'toDate': to_date,
+            'timeCommitment': args.get('timeCommitment', 0),
+            'personality': args.get('personality', ''),
+            'confirmedMembers': [],
+            'invitedMembers': [],
+        }
+
+        squad_id = mongo.db.squad.insert_one(squad_data)
+
+        return {'message': 'Squad added'}, 201
 
 @app.route('/get-all-squad', methods=['GET'])
 @jwt_required()
@@ -85,29 +121,35 @@ def GetAllSquads():
     squad_names = [squad['squadName'] for squad in squads]
     return {'squad': squad_names}, 200
 
-# Event Endpoints
-class CreateEvent(Resource):
+@app.route('/get-all-users', methods=['GET'])
+@jwt_required()
+def GetAllUsers():
+    users = list(mongo.db.users.find({}))
+    users_names = [user['username'] for user in users]
+    return {'users': users_names}, 200
+
+# Filter endpoint
+class Filter(Resource):
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('eventName', required=True)
+        parser.add_argument('personality', type=str, required=True)
+        parser.add_argument('timeCommitment', type=int, required=True)
+        parser.add_argument('skillsRequired', type=str, action='append', required=True)
 
         args = parser.parse_args()
+        personality = args['personality']
+        time_commitment = args['timeCommitment']
+        skills_required = args['skillsRequired']
 
-        existing_event = mongo.db.event.find_one({'id': args['eventName']})
+        users = list(mongo.db.users.find({
+            'personality': personality,
+            'timeCommitment': time_commitment,
+            'skills': {"$in" : skills_required}
+        }))
 
-        if existing_event:
-            return {'message': 'Event already exists'}, 400
+        users_names = [user['username'] for user in users]
 
-        event_id = mongo.db.event.insert_one({'EventName':  args['eventName']})
-
-        return {'message': 'Event added'}, 401
-
-@app.route('/get-all-events', methods=['GET'])
-@jwt_required()
-def GetAllEvent():
-    events = list(mongo.db.event.find({}))
-    event_names = [event['EventName'] for event in events]
-    return {'events': event_names}, 200
+        return {'message': users_names}, 201
 
 @app.route('/add-user', methods=['POST'])
 @jwt_required()
@@ -132,8 +174,8 @@ def InviteMember():
 
 api.add_resource(Register, '/register')
 api.add_resource(Login, '/login')
-api.add_resource(CreateEvent, '/create-event')
 api.add_resource(CreateSquad, '/create-squad')
+api.add_resource(Filter, '/filter')
 
 if __name__ == '__main__':
     app.run(debug=True)

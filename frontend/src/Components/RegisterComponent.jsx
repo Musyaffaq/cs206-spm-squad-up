@@ -92,7 +92,7 @@ function RegisterComponent() {
             fullWidth
             onClick={handleLogin}
           >
-            Log In
+            Create Account
           </Button>
           <br />
           <br />

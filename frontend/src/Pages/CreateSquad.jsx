@@ -8,20 +8,81 @@ import SkillsDropdown from "../Components/CreateSquad/SkillsDropdown";
 import TimeCommitmentDropdown from "../Components/CreateSquad/TimeCommitmentDropdown";
 import ToDateDropdown from "../Components/CreateSquad/ToDateDropdown";
 import FromDateDropdown from "../Components/CreateSquad/FromDateDropdown";
+import Personality from "../Components/CreateSquad/Personality";
 import { Button } from "@mui/material";
+import axios from "axios";
 
 function CreateSquad() {
   // Event Type, Event Name, Group Name, Skills required, Dates Required (from and to), commitment level
   const [eventName, setEventName] = useState("");
   const [groupName, setGroupName] = useState("");
-  const [skills, setskills] = useState([]);
+  const [skills, setSkills] = useState([]);
   const [datesFrom, setDatesFrom] = useState("");
   const [datesTo, setDatesTo] = useState("");
-  const [commitmentLevel, setCommitmentLevel] = useState(0);
+  const [commitmentLevel, setCommitmentLevel] = useState(5);
+  const [personality, setPersonality] = useState("");
   const navigate = useNavigate();
+  const username = sessionStorage.getItem("username");
+
+  const handleCreateSquad = async () => {
+    const data = {
+      squadName: groupName, // string
+      leaderID: username, // string
+      eventName: eventName, // string
+      fromDate: datesFrom.slice(0, 10), // string
+      toDate: datesTo.slice(0, 10), // string
+      timeCommitment: commitmentLevel, // int
+      personality: personality, // string
+      skillsRequired: skills, // array
+    };
+    console.log(data);
+
+    const headers = {
+      "Content-Type": "application/json",
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/create-squad",
+        data,
+        {
+          headers,
+        }
+      );
+
+      // Successful login
+      console.log(response);
+      navigate("/squads/sub-squad");
+
+      // Redirect or perform other actions as needed.
+    } catch (error) {
+      // Handle login error
+      console.error("Login failed", error);
+    }
+  };
 
   const updateEventName = (newValue) => {
     setEventName(newValue);
+  };
+
+  const updateSkills = (newValue) => {
+    setSkills(newValue);
+  };
+
+  const updateFromDate = (newValue) => {
+    setDatesFrom(newValue);
+  };
+
+  const updateToDate = (newValue) => {
+    setDatesTo(newValue);
+  };
+
+  const updateTimeCommitment = (newValue) => {
+    setCommitmentLevel(newValue);
+  };
+
+  const updatePersonality = (newValue) => {
+    setPersonality(newValue);
   };
 
   return (
@@ -47,19 +108,26 @@ function CreateSquad() {
             />
           </Grid>
           <Grid item xs={12}>
-            <SkillsDropdown />
+            <SkillsDropdown updateSkills={updateSkills} />
           </Grid>
           <Grid item xs={3}>
-            <FromDateDropdown />
+            <FromDateDropdown updateFromDate={updateFromDate} />
           </Grid>
           <Grid item xs={3} align="right">
-            <ToDateDropdown />
+            <ToDateDropdown updateToDate={updateToDate} />
           </Grid>
           <Grid item xs={6} align="center">
-            <TimeCommitmentDropdown />
+            <TimeCommitmentDropdown
+              updateTimeCommitment={updateTimeCommitment}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Personality updatePersonality={updatePersonality} />
           </Grid>
           <Grid item x={12} align="center">
-            <Button variant="contained">Create Squad</Button>
+            <Button variant="contained" onClick={handleCreateSquad}>
+              Create Squad
+            </Button>
           </Grid>
         </Grid>
       </form>

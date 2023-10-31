@@ -4,15 +4,21 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-function ToDateDropdown({ type }) {
+function ToDateDropdown({ updateToDate }) {
+  const [selectedDate, setSelectedDate] = useState(""); // State to store the selected date as a string
+
+  const handleSkillsChange = (newValue) => {
+    setSelectedDate(newValue.$d.toJSON());
+    updateToDate(newValue.$d.toJSON());
+    console.log(newValue.$d.toJSON());
+  };
+
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DatePicker
         label="To Date"
-        // value={startDate}
-        // onChange={(newValue) => {
-        //   setStartDate(newValue.$d.toJSON());
-        // }}
+        value={selectedDate}
+        onChange={handleSkillsChange}
         renderInput={(params) => (
           <TextField {...params} style={{ margin: 10 }} />
         )}
