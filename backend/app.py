@@ -178,11 +178,33 @@ def GetUser(username):
     else:
         return {'message': 'User not found'}, 404
 
-# Get a specific squad
+# Get a specific squad based on squadId
 @app.route('/get-squad/<string:squadId>', methods=['GET'])
 @jwt_required()
 def GetSquad(squadId):
     squad = mongo.db.squad.find_one({'_id': ObjectId(squadId)})
+
+    if squad:
+        squad_info = {
+            'squadName': squad['squadName'],
+            'eventName': squad['eventName'],
+            'leaderID': squad['leaderID'],
+            'skillsRequired': squad['skillsRequired'],
+            'fromDate': squad['fromDate'],
+            'toDate': squad['toDate'],
+            'timeCommitment': squad['timeCommitment'],
+            'personality': squad['personality'],
+            'confirmedMembers': squad['confirmedMembers']
+        }
+        return {'squad': squad_info}, 200
+    else:
+        return {'message': 'Squad not found'}, 404
+
+# Get a specific squad based on leaderId
+@app.route('/get-squad-by-leader/<string:leaderId>', methods=['GET'])
+@jwt_required()
+def GetSquadByLeader(leaderId):
+    squad = mongo.db.squad.find_one({'leaderID': leaderId})
 
     if squad:
         squad_info = {
