@@ -15,9 +15,9 @@ import {
 
 function ImageCard() {
     return (
-        <Card variant="plain" sx= {{ width: 640 }}>
+        <Card variant="plain" sx= {{ width: 850 }}>
                     <img
-                        src={LIT}
+                        src={LIT} style = {{width: 850, height: 660}}
                     />
         </Card>
     )
