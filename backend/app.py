@@ -7,6 +7,7 @@ from datetime import datetime, timedelta
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, JWTManager
 from flask_cors import CORS
 import datetime
+from bson import ObjectId
 
 app = Flask(__name__)
 CORS(app)
@@ -67,7 +68,7 @@ class Login(Resource):
             access_token = create_access_token(identity=user['username'])
 
             # Return the Bearer token in the response
-            return {'token': access_token, 'token_type': 'Bearer'}
+            return {'token': access_token, 'token_type': 'Bearer', 'userid': str(user['_id'])}
 
         return {'message': 'Invalid username or password'}, 401
 
@@ -78,11 +79,11 @@ class CreateSquad(Resource):
         parser.add_argument('squadName', type=str, required=True)
         parser.add_argument('leaderID', type=str, required=True)
         parser.add_argument('eventName', type=str, required=True)
-        parser.add_argument('skillsRequired', type=list, location='json')
-        parser.add_argument('fromDate', type=str)  # Assuming the date is passed as a string
-        parser.add_argument('toDate', type=str)  # Assuming the date is passed as a string
-        parser.add_argument('timeCommitment', type=int)
-        parser.add_argument('personality', type=str)
+        parser.add_argument('skillsRequired', type=str, action='append', required=True)
+        parser.add_argument('fromDate', type=str, required=True)  # Assuming the date is passed as a string
+        parser.add_argument('toDate', type=str, required=True)  # Assuming the date is passed as a string
+        parser.add_argument('timeCommitment', type=int, required=True)
+        parser.add_argument('personality', type=str, required=True)
 
         args = parser.parse_args()
 
@@ -119,9 +120,110 @@ def GetAllSquads():
     squad_names = [squad['squadName'] for squad in squads]
     return {'squad': squad_names}, 200
 
+@app.route('/get-all-users', methods=['GET'])
+@jwt_required()
+def GetAllUsers():
+    users = list(mongo.db.users.find({}))
+    users_names = [user['username'] for user in users]
+    return {'users': users_names}, 200
+
+# Filter endpoint
+class Filter(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('personality', type=str, required=True)
+        parser.add_argument('timeCommitment', type=int, required=True)
+        parser.add_argument('skillsRequired', type=str, action='append', required=True)
+
+        args = parser.parse_args()
+        personality = args['personality']
+        time_commitment = args['timeCommitment']
+        skills_required = args['skillsRequired']
+
+        users = list(mongo.db.users.find({
+            'personality': personality,
+            'timeCommitment': time_commitment,
+            'skills': {"$in" : skills_required}
+        }))
+
+        usersList = []
+
+        for user in users:
+            user_info = {
+                'username': user['username'],
+                'skills': user['skills'],
+                'personality': user['personality'],
+                'timeCommitment': user['timeCommitment']
+            }
+            usersList.append(user_info)
+
+        return {'usersList': usersList}, 201
+
+# Get a specific user profile
+@app.route('/get-user/<string:userId>', methods=['GET'])
+# @jwt_required()
+def GetUser(userId):
+    user = mongo.db.users.find_one({'_id': ObjectId(userId)})
+
+    if user:
+        user_info = {
+            'userid': str(user['_id']),
+            'skills': user['skills'],
+            'personality': user['personality'],
+            'timeCommitment': user['timeCommitment']
+        }
+        return {'user': user_info}, 200
+    else:
+        return {'message': 'User not found'}, 404
+
+# Get a specific squad based on squadId
+@app.route('/get-squad/<string:squadId>', methods=['GET'])
+# @jwt_required()
+def GetSquad(squadId):
+    squad = mongo.db.squad.find_one({'_id': ObjectId(squadId)})
+
+    if squad:
+        squad_info = {
+            'squadName': squad['squadName'],
+            'eventName': squad['eventName'],
+            'leaderID': squad['leaderID'],
+            'skillsRequired': squad['skillsRequired'],
+            'fromDate': squad['fromDate'],
+            'toDate': squad['toDate'],
+            'timeCommitment': squad['timeCommitment'],
+            'personality': squad['personality'],
+            'confirmedMembers': squad['confirmedMembers']
+        }
+        return {'squad': squad_info}, 200
+    else:
+        return {'message': 'Squad not found'}, 404
+
+# Get a specific squad based on leaderId
+@app.route('/get-squad-by-leader/<string:leaderId>', methods=['GET'])
+@jwt_required()
+def GetSquadByLeader(leaderId):
+    squad = mongo.db.squad.find_one({'leaderID': leaderId})
+
+    if squad:
+        squad_info = {
+            'squadName': squad['squadName'],
+            'eventName': squad['eventName'],
+            'leaderID': squad['leaderID'],
+            'skillsRequired': squad['skillsRequired'],
+            'fromDate': squad['fromDate'],
+            'toDate': squad['toDate'],
+            'timeCommitment': squad['timeCommitment'],
+            'personality': squad['personality'],
+            'confirmedMembers': squad['confirmedMembers']
+        }
+        return {'squad': squad_info}, 200
+    else:
+        return {'message': 'Squad not found'}, 404
+
 api.add_resource(Register, '/register')
 api.add_resource(Login, '/login')
 api.add_resource(CreateSquad, '/create-squad')
+api.add_resource(Filter, '/filter')
 
 if __name__ == '__main__':
     app.run(debug=True)
