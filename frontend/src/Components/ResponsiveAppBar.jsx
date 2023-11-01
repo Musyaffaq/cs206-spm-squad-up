@@ -1,7 +1,7 @@
 // Source - https://mui.com/material-ui/react-app-bar/#app-bar-with-responsive-menu
 
 import * as React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -19,14 +19,15 @@ import ThemeToggle from "./ThemeToggle";
 
 // const pages = ["Products", "Pricing", "Blog"];
 const settings = [
-  ["Profile", "/profiles/sub-profile"],
+  ["Profile", `/profiles/` + sessionStorage.getItem("userid")],
   ["Edit Profile", "/profiles/edit"],
-  ["Logout", "/"],
+  ["Logout", "/login"],
 ];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -39,8 +40,11 @@ function ResponsiveAppBar() {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = (page) => {
     setAnchorElUser(null);
+    if (page === "Logout") {
+      sessionStorage.clear();
+    }
   };
 
   return (
@@ -159,7 +163,10 @@ function ResponsiveAppBar() {
                   to={link}
                   style={{ color: "black", textDecoration: "none" }}
                 >
-                  <MenuItem key={page} onClick={handleCloseUserMenu}>
+                  <MenuItem
+                    key={page}
+                    onClick={() => handleCloseUserMenu(page)}
+                  >
                     <Typography textAlign="center">{page}</Typography>
                   </MenuItem>
                 </Link>
