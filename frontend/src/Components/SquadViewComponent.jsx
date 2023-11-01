@@ -1,5 +1,5 @@
 import React from 'react';
-import DisplayAttributeCards from './DistributeAttributeCards';
+import DisplayAttributeCards from './DisplayAttributeCards';
 import Grid from '@mui/material/Unstable_Grid2';
 import ImageCard from './ImageCard';
 
