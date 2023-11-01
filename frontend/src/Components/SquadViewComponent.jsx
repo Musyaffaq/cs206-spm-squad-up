@@ -1,19 +1,22 @@
 import React from 'react';
 import DisplayPersonality from './DisplaySquad/DisplayPersonality';
 import DisplaySkills from './DisplaySquad/DisplaySkills';
+import DisplayDates from './DisplaySquad/DisplayDates';
+import DisplayTimeCommitment from './DisplaySquad/DisplayTimeCommitment';
+import DisplayCfmMember from './DisplaySquad/DisplayCfmMember';
 import Grid from '@mui/material/Unstable_Grid2';
 import ImageCard from './ImageCard';
 
 const inputArr = [
     {
-      squadName : "Squad Name",
-      EventName  : "Event Name",
+      squadName : "Squad Gay",
+      EventName  : "LIT Hackathon 2023",
       SkillsRequired : ["Skill 1", "Skill 2", "Skill 3"],
-      FromDate : "dd/mm/yyyy",
-      ToDate : "dd/mm/yyyy",
+      FromDate : "22/11/1990",
+      ToDate : "22/11/2222",
       TimeCommitment : 5,
       Personality : "Gay",
-      ConfirmedMembers : ["Member 1", "Member 2", "Member 3"],
+      ConfirmedMembers : ["Member1", "Member2", "Member3"],
 
     }
 ]
@@ -23,7 +26,8 @@ const SquadViewComponent = () => {
   const { squadName, EventName, SkillsRequired, FromDate, ToDate, TimeCommitment, Personality, ConfirmedMembers } = inputArr[0];
   return (
     <div className="group-view">
-      <h1>Competition Name</h1>
+      <h1>{squadName}</h1>
+      <h2>{EventName}</h2>
 
     <ImageCard />
       
@@ -38,10 +42,13 @@ const SquadViewComponent = () => {
                 <DisplaySkills Skills ={SkillsRequired} />
             </Grid>
             <Grid xs={6}>
-                <DisplayPersonality personality ={Personality} />
+                <DisplayDates FromDate = {FromDate} ToDate = {ToDate}/>
             </Grid>
             <Grid xs={6}>
-                <DisplayPersonality Personality ={Personality} />
+                <DisplayTimeCommitment TimeCommitment ={TimeCommitment} />
+            </Grid>
+            <Grid xs={12}>
+                <DisplayCfmMember ConfirmedMembers ={ConfirmedMembers} />
             </Grid>
         </Grid>
 

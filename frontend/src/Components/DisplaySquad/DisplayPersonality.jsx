@@ -9,7 +9,7 @@ function DisplayPersonality({Personality}) {
     return (
         <Card variant="outlined">
             <CardContent>
-                <Typography level="title-md" style={{ textDecoration: "underline", MarginBottom: "5"}}>Personality:</Typography>
+                <Typography level="title-md" style={{ textDecoration: "underline"}}>Personality:</Typography>
                 <Typography>{Personality}</Typography>
             </CardContent>
         </Card>

@@ -11,9 +11,7 @@ import {
     return (
       <Card variant="outlined">
         <CardContent>
-          <Typography  level="title-md" style={{ textDecoration: "underline", MarginBottom: "500" }}>
-            Skills:
-          </Typography>
+          <Typography  level="title-md" style={{ textDecoration: "underline" }}>Skills:</Typography>
           {Skills.map((skill, index) => (
             <Chip key={index} label={skill} />
           ))}
