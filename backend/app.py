@@ -11,8 +11,6 @@ from bson import ObjectId
 
 app = Flask(__name__)
 CORS(app)
-# CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
-# CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 app.config['SECRET_KEY'] = 'your-secret-key'
 app.config['MONGO_URI'] = 'mongodb+srv://admin:spm100@cluster0.qgb6fhm.mongodb.net/squadup'
@@ -70,7 +68,7 @@ class Login(Resource):
             access_token = create_access_token(identity=user['username'])
 
             # Return the Bearer token in the response
-            return {'token': access_token, 'token_type': 'Bearer'}
+            return {'token': access_token, 'token_type': 'Bearer', 'userid': str(user['_id'])}
 
         return {'message': 'Invalid username or password'}, 401
 
@@ -162,14 +160,14 @@ class Filter(Resource):
         return {'usersList': usersList}, 201
 
 # Get a specific user profile
-@app.route('/get-user/<string:username>', methods=['GET'])
-@jwt_required()
-def GetUser(username):
-    user = mongo.db.users.find_one({'username': username})
+@app.route('/get-user/<string:userId>', methods=['GET'])
+# @jwt_required()
+def GetUser(userId):
+    user = mongo.db.users.find_one({'_id': ObjectId(userId)})
 
     if user:
         user_info = {
-            'username': user['username'],
+            'userid': str(user['_id']),
             'skills': user['skills'],
             'personality': user['personality'],
             'timeCommitment': user['timeCommitment']
@@ -180,7 +178,7 @@ def GetUser(username):
 
 # Get a specific squad based on squadId
 @app.route('/get-squad/<string:squadId>', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def GetSquad(squadId):
     squad = mongo.db.squad.find_one({'_id': ObjectId(squadId)})
 
