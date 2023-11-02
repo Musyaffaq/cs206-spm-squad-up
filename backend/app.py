@@ -121,11 +121,22 @@ def GetAllSquads():
     return {'squad': squad_names}, 200
 
 @app.route('/get-all-users', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def GetAllUsers():
     users = list(mongo.db.users.find({}))
-    users_names = [user['username'] for user in users]
-    return {'users': users_names}, 200
+    usersList = []
+
+    for user in users:
+        user_info = {
+            'username': user['username'],
+            'userid':str(user['_id']),
+            'skills': user['skills'],
+            'personality': user['personality'],
+            'timeCommitment': user['timeCommitment']
+        }
+        usersList.append(user_info)
+
+    return {'usersList': usersList}, 201
 
 # Filter endpoint
 class Filter(Resource):
@@ -151,6 +162,7 @@ class Filter(Resource):
         for user in users:
             user_info = {
                 'username': user['username'],
+                'userid':str(user['_id']),
                 'skills': user['skills'],
                 'personality': user['personality'],
                 'timeCommitment': user['timeCommitment']
