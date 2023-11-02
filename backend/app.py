@@ -111,7 +111,7 @@ class CreateSquad(Resource):
 
         squad_id = mongo.db.squad.insert_one(squad_data)
 
-        return {'message': 'Squad added'}, 201
+        return {'message': 'Squad added', 'squadid': str(squad_id.inserted_id)}, 201
 
 @app.route('/get-all-squad', methods=['GET'])
 @jwt_required()
