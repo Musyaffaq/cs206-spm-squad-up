@@ -5,7 +5,7 @@ import Personality from "../Components/CreateSquad/Personality";
 import { Button } from "@mui/material";
 import axios from "axios";
 
-function Filter() {
+function Filter({ updateUserData }) {
   const [filter, setFilter] = useState("");
   const [skills, setSkills] = useState([]);
   const [commitmentLevel, setCommitmentLevel] = useState(5);
@@ -29,7 +29,6 @@ function Filter() {
       personality: personality, // string
       skillsRequired: skills, // array
     };
-    console.log(data);
 
     const headers = {
       "Content-Type": "application/json",
@@ -39,9 +38,7 @@ function Filter() {
       const response = await axios.post("http://localhost:5000/filter", data, {
         headers,
       });
-
-      // Successful login
-      console.log(response);
+      updateUserData(response.data["usersList"]);
 
       // Redirect or perform other actions as needed.
     } catch (error) {
