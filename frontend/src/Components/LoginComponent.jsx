@@ -25,9 +25,9 @@ function LoginComponent() {
       });
 
       // Successful login
-      console.log(response.data.token);
       sessionStorage.setItem("token", response.data.token);
       sessionStorage.setItem("username", username);
+      sessionStorage.setItem("userid", response.data.userid);
       navigate("/");
 
       // Redirect or perform other actions as needed.
