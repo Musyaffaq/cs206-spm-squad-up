@@ -233,23 +233,37 @@ def GetSquadByLeader(leaderId):
     else:
         return {'message': 'Squad not found'}, 404
 
-@app.route('/add-user', methods=['POST'])
-# @jwt_required()
-def InviteMember():
-    parser = reqparse.RequestParser()
-    parser.add_argument('squadName', required=True)
-    parser.add_argument('memberName', required=True)
-    args = parser.parse_args()
-    print(args)
+# edit profile
+class EditProfile(Resource):
+    def post(self, userid):
+        parser = reqparse.RequestParser()
+        parser.add_argument('skills', type=list, location='json')
+        parser.add_argument('personality', type=str)
+        parser.add_argument('timeCommitment', type=int)
+        parser.add_argument('userid', type=str)
 
-    event_id = mongo.db.squad.update_one(
-        {
-            'squadName':args['squadName']
-        },
-        {
-            '$push': {'invitedMembers': args['memberName']}
-        })
-    return {'message':'Member invited'}
+        args = parser.parse_args()
+        userid = ObjectId(userid)
+
+        result = mongo.db.users.update_one(
+            {'_id': userid},
+            {
+                '$set': {
+                    'skills': args.get('skills', []),
+                    'personality': args.get('personality', ''),
+                    'timeCommitment': args.get('timeCommitment', 0),
+                }
+            }
+        )
+
+        if result.modified_count > 0:
+            return {'message': 'User profile updated successfully'}, 200
+        else:
+            return {'message': 'User not found or no changes made'}, 404
+
+
+
+api.add_resource(EditProfile, '/edit-user/<string:userid>')
 
 
 
