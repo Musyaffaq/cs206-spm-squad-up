@@ -5,6 +5,8 @@ import Personality from "../Components/CreateSquad/Personality";
 import { Button } from "@mui/material";
 import axios from "axios";
 
+import API_LINK from "../Api";
+
 function Filter({ updateUserData }) {
   const [filter, setFilter] = useState("");
   const [skills, setSkills] = useState([]);
@@ -35,7 +37,7 @@ function Filter({ updateUserData }) {
     };
 
     try {
-      const response = await axios.post("http://localhost:5000/filter", data, {
+      const response = await axios.post(API_LINK + `filter`, data, {
         headers,
       });
       updateUserData(response.data["usersList"]);

@@ -4,11 +4,14 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Alert, Snackbar } from "@mui/material";
 
-function InviteButton({ memberName }) {
+import API_LINK from "../Api";
+
+function InviteButton({ memberName, userId }) {
   const [squadName, setSquadName] = useState("");
-  let username = sessionStorage.getItem("username");
+  let currUsername = sessionStorage.getItem("username");
   const [isInvited, setIsInvited] = useState(false);
   const [open, setOpen] = useState(false);
+  const [username, setUsername] = useState("");
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -19,31 +22,31 @@ function InviteButton({ memberName }) {
   };
 
   useEffect(() => {
-    username = sessionStorage.getItem("username");
-    fetch(`http://localhost:5000/get-squad-by-leader/` + username)
-      .then((res) => res.json())
+    currUsername = sessionStorage.getItem("username");
+    fetch(API_LINK + `get-user/${userId}`)
+      .then((res) => res.json()) // Parse the response as JSON
       .then((data) => {
-        let users = data.squad.invitedMembers;
-        // console.log(users);
-        // console.log(users.indexOf(memberName) !== -1);
-        if (users.indexOf(memberName) !== -1) {
-          console.log(`${memberName} is in the array.`);
-          setIsInvited(true);
-        }
-        //  else {
-        // console.log(`${usernam} is not in the array.`);
-        // }
-        // setUserData(data["usersList"]);
+        setUsername(data.user.username);
+        fetch(API_LINK + `get-squad-by-leader/` + currUsername)
+          .then((res) => res.json())
+          .then((data2) => {
+            console.log(data.user.username);
+            let users = data2.squad.invitedMembers;
+            if (users.indexOf(data.user.username) !== -1) {
+              console.log(`${data.user.username} is in the array.`);
+              setIsInvited(true);
+            }
+          });
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
   }, []);
 
   const handleButtonClick = async () => {
-    // const squadName = "";
-    // const memberName = "aabbcc";
-
     try {
       const response1 = await axios.get(
-        `http://localhost:5000/get-squad-by-leader/` + username
+        API_LINK + `get-squad-by-leader/` + currUsername
       );
       const squadName = response1.data.squad.squadName;
       try {
@@ -51,10 +54,7 @@ function InviteButton({ memberName }) {
           squadName: squadName,
           memberName: memberName,
         };
-        const response2 = await axios.post(
-          "http://localhost:5000/add-user",
-          data
-        );
+        const response2 = await axios.post(API_LINK + `add-user`, data);
         setIsInvited(true);
         setOpen(true);
       } catch (error) {
@@ -63,12 +63,6 @@ function InviteButton({ memberName }) {
     } catch (error) {
       console.log("Error:", error);
     }
-    // try {
-    //   const response = await axios.post("http://localhost:5000/add-user", data);
-    //   console.log(response);
-    // } catch (error) {
-    //   console.error("Error:", error);
-    // }
   };
 
   return (

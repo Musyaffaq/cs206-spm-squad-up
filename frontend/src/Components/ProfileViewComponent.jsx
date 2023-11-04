@@ -8,6 +8,8 @@ import { useParams, Link } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 import InviteButton from "./InviteButton";
 
+import API_LINK from "../Api";
+
 const ProfileContainer = {
   width: "190px",
   height: "190px",
@@ -19,9 +21,14 @@ const ProfileContainer = {
 };
 
 const ProfileViewComponent = ({ userId }) => {
+  const [isInvited, setIsInvited] = useState(false);
+  const [username, setUsername] = useState("");
+  const [skills, setSkills] = useState([]);
+  const [personality, setPersonality] = useState("");
+  const [timeCommitment, setTimeCommitment] = useState(0);
+
   useEffect(() => {
-    console.log(userId);
-    fetch(`http://localhost:5000/get-user/${userId}`)
+    fetch(API_LINK + `get-user/${userId}`)
       .then((res) => res.json()) // Parse the response as JSON
       .then((data) => {
         setUsername(data.user.username);
@@ -34,18 +41,14 @@ const ProfileViewComponent = ({ userId }) => {
       });
   }, [userId]);
 
-  const [userName, setUsername] = useState("");
-
-  const [skills, setSkills] = useState([]);
-  const [personality, setPersonality] = useState("");
-  const [timeCommitment, setTimeCommitment] = useState(0);
-
   return (
     <div className="group-view">
-      <div style={{ display: "flex", alignItems: "center", marginTop: "-26px"  }}>
-        <h1 style={{ marginRight: "1em"}}>{userName} </h1>
-        {userName !== sessionStorage.getItem("username") ? (
-          <InviteButton memberName={userName} />
+      <div
+        style={{ display: "flex", alignItems: "center", marginTop: "-26px" }}
+      >
+        <h1 style={{ marginRight: "1em" }}>{username} </h1>
+        {username !== sessionStorage.getItem("username") ? (
+          <InviteButton memberName={username} userId={userId} />
         ) : (
           <Link to="/profiles/edit">
             <Button variant="outlined">Edit Profile</Button>

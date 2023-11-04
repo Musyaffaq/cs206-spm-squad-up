@@ -8,6 +8,7 @@ import Personality from "../Components/CreateSquad/Personality";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import API_LINK from "../Api";
 
 function EditProfile() {
   const [skills, setSkills] = useState([]);
@@ -26,13 +27,9 @@ function EditProfile() {
     const headers = {
       "Content-Type": "application/json",
     };
-    const response = await axios.post(
-      `http://localhost:5000/edit-user/` + userid,
-      data,
-      {
-        headers,
-      }
-    );
+    const response = await axios.post(API_LINK + `edit-user/` + userid, data, {
+      headers,
+    });
 
     // Successful login
     navigate(`/profiles/` + userid);
