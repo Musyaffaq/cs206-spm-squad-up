@@ -179,6 +179,7 @@ def GetUser(userId):
 
     if user:
         user_info = {
+            'username': user['username'],
             'userid': str(user['_id']),
             'skills': user['skills'],
             'personality': user['personality'],
