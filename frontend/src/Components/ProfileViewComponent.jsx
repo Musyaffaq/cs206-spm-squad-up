@@ -3,19 +3,20 @@ import DisplayPersonality from "./DisplaySquad/DisplayPersonality";
 import DisplaySkills from "./DisplaySquad/DisplaySkills";
 import DisplayTimeCommitment from "./DisplaySquad/DisplayTimeCommitment";
 import Grid from "@mui/material/Unstable_Grid2";
-import ImageCard from "./ImageCard";
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 import InviteButton from "./InviteButton";
 
-const circleContainer = {
-  width: "150px",
-  height: "150px",
+import API_LINK from "../Api";
+
+const ProfileContainer = {
+  width: "190px",
+  height: "190px",
   alignItems: "center",
   overflow: "hidden",
   display: "flex",
-  borderRadius: "50%",
+  borderRadius: "5%",
   marginRight: "5px",
 };
 
@@ -27,7 +28,7 @@ const ProfileViewComponent = ({ userId }) => {
   const [timeCommitment, setTimeCommitment] = useState(0);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/get-user/${userId}`)
+    fetch(API_LINK + `get-user/${userId}`)
       .then((res) => res.json()) // Parse the response as JSON
       .then((data) => {
         setUsername(data.user.username);
@@ -42,7 +43,9 @@ const ProfileViewComponent = ({ userId }) => {
 
   return (
     <div className="group-view">
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div
+        style={{ display: "flex", alignItems: "center", marginTop: "-26px" }}
+      >
         <h1 style={{ marginRight: "1em" }}>{username} </h1>
         {username !== sessionStorage.getItem("username") ? (
           <InviteButton memberName={username} userId={userId} />
@@ -53,7 +56,7 @@ const ProfileViewComponent = ({ userId }) => {
         )}
       </div>
 
-      <img src="/person1.jpg" style={circleContainer} alt="image" />
+      <img src="/default_profile.jpg" style={ProfileContainer} alt="image" />
       <div className="group-info">
         <h2>User Information</h2>
         <Grid container spacing={2}>
@@ -61,10 +64,10 @@ const ProfileViewComponent = ({ userId }) => {
             <DisplayPersonality Personality={personality} />
           </Grid>
           <Grid xs={6}>
-            <DisplaySkills Skills={skills} />
-          </Grid>
-          <Grid xs={6}>
             <DisplayTimeCommitment TimeCommitment={timeCommitment} />
+          </Grid>
+          <Grid xs={12}>
+            <DisplaySkills Skills={skills} />
           </Grid>
         </Grid>
       </div>

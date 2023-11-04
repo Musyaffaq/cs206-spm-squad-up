@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import API_LINK from "../Api";
 
 function RegisterComponent() {
   const [username, setUsername] = useState("");
@@ -42,13 +43,9 @@ function RegisterComponent() {
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/register",
-        data,
-        {
-          headers,
-        }
-      );
+      const response = await axios.post(API_LINK + `register`, data, {
+        headers,
+      });
 
       setUsername("");
       setPassword("");

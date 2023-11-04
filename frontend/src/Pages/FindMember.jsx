@@ -11,14 +11,6 @@ function FindMember() {
     setUserData(newValue);
   };
 
-  // useEffect(() => {
-  //   fetch("http://localhost:5000/get-all-users")
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       setUserData(data["usersList"]);
-  //     });
-  // }, []);
-
   return (
     <>
       <div>
