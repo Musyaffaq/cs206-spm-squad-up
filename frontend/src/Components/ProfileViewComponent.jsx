@@ -43,10 +43,12 @@ const ProfileViewComponent = ({ userId }) => {
 
   return (
     <div className="group-view">
-      <div style={{ display: "flex", alignItems: "center", marginTop: "-26px"  }}>
-        <h1 style={{ marginRight: "1em"}}>{userName} </h1>
-        {userName !== sessionStorage.getItem("username") ? (
-          <InviteButton memberName={userName} />
+      <div
+        style={{ display: "flex", alignItems: "center", marginTop: "-26px" }}
+      >
+        <h1 style={{ marginRight: "1em" }}>{username} </h1>
+        {username !== sessionStorage.getItem("username") ? (
+          <InviteButton memberName={username} userId={userId} />
         ) : (
           <Link to="/profiles/edit">
             <Button variant="outlined">Edit Profile</Button>
