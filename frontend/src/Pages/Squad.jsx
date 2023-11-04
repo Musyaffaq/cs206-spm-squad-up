@@ -1,10 +1,13 @@
-import React from 'react'
-import SquadViewComponent from '../Components/SquadViewComponent'
+import React, { useState, useEffect } from "react";
+import SquadViewComponent from "../Components/SquadViewComponent";
+import { useParams } from "react-router-dom";
 
 function Squad() {
   return (
-    <SquadViewComponent />
-  )
+    <>
+      <SquadViewComponent />
+    </>
+  );
 }
 
-export default Squad
+export default Squad;

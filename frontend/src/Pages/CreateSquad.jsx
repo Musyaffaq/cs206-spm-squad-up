@@ -51,8 +51,8 @@ function CreateSquad() {
       );
 
       // Successful login
-      console.log(response);
-      navigate("/squads/sub-squad");
+      console.log(response.data.squadid);
+      navigate(`/squads/` + response.data.squadid);
 
       // Redirect or perform other actions as needed.
     } catch (error) {
