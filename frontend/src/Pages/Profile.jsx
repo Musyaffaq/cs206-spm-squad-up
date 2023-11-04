@@ -16,7 +16,7 @@ function Profile() {
   }, []);
   return (
     <>
-      <ProfileViewComponent userId={userid}/>
+      <ProfileViewComponent userId={userid} />
     </>
   );
 }

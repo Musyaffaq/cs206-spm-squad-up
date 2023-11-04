@@ -50,6 +50,9 @@ function RegisterComponent() {
         }
       );
 
+      setUsername("");
+      setPassword("");
+
       // Successful login
       console.log("Successfully Created Account!");
       console.log(response.data);

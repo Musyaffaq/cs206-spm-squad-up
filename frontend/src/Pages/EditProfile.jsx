@@ -10,20 +10,19 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function EditProfile() {
-
   const [skills, setSkills] = useState([]);
   const [personality, setPersonality] = useState("");
   const [timeCommitment, setTimeCommitment] = useState(0);
   const navigate = useNavigate();
-  const userid = sessionStorage.getItem('userid');
+  const userid = sessionStorage.getItem("userid");
 
   const handleEditProfile = async () => {
     const data = {
       skills: skills,
       personality: personality,
       timeCommitment: timeCommitment,
-      userid: userid
-    }
+      userid: userid,
+    };
     const headers = {
       "Content-Type": "application/json",
     };
@@ -37,7 +36,7 @@ function EditProfile() {
 
     // Successful login
     navigate(`/profiles/` + userid);
-  }
+  };
 
   const updateSkills = (newValue) => {
     setSkills(newValue);
@@ -51,42 +50,35 @@ function EditProfile() {
     setTimeCommitment(newValue);
   };
 
-
-
-
   return (
     <Grid container spacing={4}>
-      <Grid item xs={12}>
+      <Grid item xs={16}>
         <Typography variant="h4" align="left" gutterBottom>
           Edit Profile
         </Typography>
       </Grid>
       <form>
         <Grid container spacing={4}>
-        
-          <Grid item xs={12}>
+          <Grid item xs={16}>
             <Personality updatePersonality={updatePersonality} />
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={16}>
             <SkillsDropdown updateSkills={updateSkills} />
           </Grid>
-          <Grid item xs={6} align="center">
+          <Grid item xs={16} align="center">
             <TimeCommitmentDropdown
               updateTimeCommitment={updateTimeCommitment}
             />
           </Grid>
-          
-          
-
         </Grid>
-        <Grid item x={12} align="center">
-            <Button variant="contained" onClick={handleEditProfile}>
-              Edit Profile
-            </Button>
-          </Grid>
+        <Grid item xs={16} align="center">
+          <Button variant="contained" onClick={handleEditProfile}>
+            Edit Profile
+          </Button>
+        </Grid>
       </form>
     </Grid>
   );
 }
 
-export default EditProfile
+export default EditProfile;

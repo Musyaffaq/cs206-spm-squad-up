@@ -5,20 +5,21 @@ import DisplayTimeCommitment from "./DisplaySquad/DisplayTimeCommitment";
 import Grid from "@mui/material/Unstable_Grid2";
 import ImageCard from "./ImageCard";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-
+import { useParams, Link } from "react-router-dom";
+import { Button, Typography } from "@mui/material";
+import InviteButton from "./InviteButton";
 
 const circleContainer = {
-    width: '150px', 
-    height: '150px',
-    alignItems: 'center',
-    overflow: 'hidden',
-    display: 'flex',
-    borderRadius: '50%',
-    marginRight: '5px',
-  };
+  width: "150px",
+  height: "150px",
+  alignItems: "center",
+  overflow: "hidden",
+  display: "flex",
+  borderRadius: "50%",
+  marginRight: "5px",
+};
 
-const ProfileViewComponent = ({userId}) => {
+const ProfileViewComponent = ({ userId }) => {
   useEffect(() => {
     console.log(userId);
     fetch(`http://localhost:5000/get-user/${userId}`)
@@ -34,19 +35,26 @@ const ProfileViewComponent = ({userId}) => {
       });
   }, [userId]);
 
-
   const [userName, setUsername] = useState("");
-  
+
   const [skills, setSkills] = useState([]);
   const [personality, setPersonality] = useState("");
   const [timeCommitment, setTimeCommitment] = useState(0);
 
   return (
     <div className="group-view">
-      <h1>{userName}</h1>
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <h1 style={{ marginRight: "1em" }}>{userName} </h1>
+        {userName !== sessionStorage.getItem("username") ? (
+          <InviteButton memberName={userName} />
+        ) : (
+          <Link to="/profiles/edit">
+            <Button variant="outlined">Edit Profile</Button>
+          </Link>
+        )}
+      </div>
 
-        <img src="/person1.jpg" style={circleContainer} alt="image"/>
-
+      <img src="/person1.jpg" style={circleContainer} alt="image" />
       <div className="group-info">
         <h2>User Information</h2>
         <Grid container spacing={2}>
