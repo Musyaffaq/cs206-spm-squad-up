@@ -20,8 +20,13 @@ const circleContainer = {
 };
 
 const ProfileViewComponent = ({ userId }) => {
+  const [isInvited, setIsInvited] = useState(false);
+  const [username, setUsername] = useState("");
+  const [skills, setSkills] = useState([]);
+  const [personality, setPersonality] = useState("");
+  const [timeCommitment, setTimeCommitment] = useState(0);
+
   useEffect(() => {
-    console.log(userId);
     fetch(`http://localhost:5000/get-user/${userId}`)
       .then((res) => res.json()) // Parse the response as JSON
       .then((data) => {
@@ -35,18 +40,12 @@ const ProfileViewComponent = ({ userId }) => {
       });
   }, [userId]);
 
-  const [userName, setUsername] = useState("");
-
-  const [skills, setSkills] = useState([]);
-  const [personality, setPersonality] = useState("");
-  const [timeCommitment, setTimeCommitment] = useState(0);
-
   return (
     <div className="group-view">
       <div style={{ display: "flex", alignItems: "center" }}>
-        <h1 style={{ marginRight: "1em" }}>{userName} </h1>
-        {userName !== sessionStorage.getItem("username") ? (
-          <InviteButton memberName={userName} />
+        <h1 style={{ marginRight: "1em" }}>{username} </h1>
+        {username !== sessionStorage.getItem("username") ? (
+          <InviteButton memberName={username} userId={userId} />
         ) : (
           <Link to="/profiles/edit">
             <Button variant="outlined">Edit Profile</Button>
