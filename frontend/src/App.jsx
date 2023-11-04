@@ -20,6 +20,7 @@ import NoPage from "./Pages/NoPage";
 import RouteGuard from "./Util/RouteGuard";
 import FindMember from "./Pages/FindMember";
 
+
 import Container from "@mui/material/Container";
 
 // theme created using https://bareynol.github.io/mui-theme-creator/
@@ -53,7 +54,6 @@ function App() {
       ? localStorage.getItem("theme") === "true"
       : true
   );
-  
 
   window.addEventListener("theme", () => {
     setTheme(localStorage.getItem("theme") === "true");
@@ -73,9 +73,8 @@ function App() {
                 path="/profiles"
                 element={<RouteGuard element={<ViewProfiles />} />}
               />
-              {/* edit to make it dynamic according to username */}
               <Route
-                path="/profiles/sub-profile"
+                path="/profiles/:userid"
                 element={<RouteGuard element={<Profile />} />}
               />
               <Route
@@ -91,9 +90,8 @@ function App() {
                 path="/squads/create"
                 element={<RouteGuard element={<CreateSquad />} />}
               />
-              {/* edit to make it dynamic according to squadid */}
               <Route
-                path="/squads/sub-squad"
+                path="/squads/:squadid"
                 element={<RouteGuard element={<Squad />} />}
               />
 
@@ -106,8 +104,6 @@ function App() {
                 path="/events/sub-event"
                 element={<RouteGuard element={<Event />} />}
               />
-              {/* edit to make it dynamic according to eventid */}
-              
               <Route
                 path="/findmember"
                 element={<RouteGuard element={<FindMember />} />}
