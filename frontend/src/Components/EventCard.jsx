@@ -9,10 +9,10 @@ import {
 import React from "react";
 
 const cardStyles = {
-  width: '600px', 
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexwrap: 'wrap',
+  width: "600px",
+  alignItems: "center",
+  justifyContent: "center",
+  flexwrap: "wrap",
 };
 
 function EventCard({ eventData }) {
@@ -21,7 +21,12 @@ function EventCard({ eventData }) {
       <Card>
         <CardContent>
           <Typography>{eventData.title}</Typography>
-          <img src={eventData.image} alt={eventData.title} width="140" height="110" />
+          <img
+            src={eventData.image}
+            alt={eventData.title}
+            width="140"
+            height="110"
+          />
           <Typography>{eventData.information}</Typography>
         </CardContent>
         <CardActions>

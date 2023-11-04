@@ -212,7 +212,7 @@ def GetSquad(squadId):
 
 # Get a specific squad based on leaderId
 @app.route('/get-squad-by-leader/<string:leaderId>', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def GetSquadByLeader(leaderId):
     squad = mongo.db.squad.find_one({'leaderID': leaderId})
 
@@ -226,7 +226,8 @@ def GetSquadByLeader(leaderId):
             'toDate': squad['toDate'],
             'timeCommitment': squad['timeCommitment'],
             'personality': squad['personality'],
-            'confirmedMembers': squad['confirmedMembers']
+            'confirmedMembers': squad['confirmedMembers'],
+            'invitedMembers': squad['invitedMembers']
         }
         return {'squad': squad_info}, 200
     else:
