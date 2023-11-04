@@ -233,12 +233,13 @@ def GetSquadByLeader(leaderId):
         return {'message': 'Squad not found'}, 404
 
 @app.route('/add-user', methods=['POST'])
-@jwt_required()
+# @jwt_required()
 def InviteMember():
     parser = reqparse.RequestParser()
     parser.add_argument('squadName', required=True)
     parser.add_argument('memberName', required=True)
     args = parser.parse_args()
+    print(args)
 
     event_id = mongo.db.squad.update_one(
         {
