@@ -30,7 +30,7 @@ class Register(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument('username', required=True)
         parser.add_argument('password', required=True)
-        parser.add_argument('skills', type=list, location='json')  # List of skills
+        # parser.add_argument('skills', type=list, location='json')  # List of skills
         parser.add_argument('personality', type=str)
         parser.add_argument('timeCommitment', type=int)
 
@@ -45,7 +45,8 @@ class Register(Resource):
         user_data = {
             'username': args['username'],
             'password': hashed_password,
-            'skills': args.get('skills', []),
+            'skills': [],
+            # 'skills': args.get('skills', []),
             'personality': args.get('personality', ''),
             'timeCommitment': args.get('timeCommitment', 0),
         }
@@ -179,6 +180,7 @@ def GetUser(userId):
 
     if user:
         user_info = {
+            'username': user['username'],
             'userid': str(user['_id']),
             'skills': user['skills'],
             'personality': user['personality'],
@@ -212,7 +214,7 @@ def GetSquad(squadId):
 
 # Get a specific squad based on leaderId
 @app.route('/get-squad-by-leader/<string:leaderId>', methods=['GET'])
-@jwt_required()
+# @jwt_required()
 def GetSquadByLeader(leaderId):
     squad = mongo.db.squad.find_one({'leaderID': leaderId})
 
@@ -226,7 +228,8 @@ def GetSquadByLeader(leaderId):
             'toDate': squad['toDate'],
             'timeCommitment': squad['timeCommitment'],
             'personality': squad['personality'],
-            'confirmedMembers': squad['confirmedMembers']
+            'confirmedMembers': squad['confirmedMembers'],
+            'invitedMembers': squad['invitedMembers']
         }
         return {'squad': squad_info}, 200
     else:
@@ -249,6 +252,38 @@ def InviteMember():
             '$push': {'invitedMembers': args['memberName']}
         })
     return {'message':'Member invited'}
+
+# edit profile
+class EditProfile(Resource):
+    def post(self, userid):
+        parser = reqparse.RequestParser()
+        parser.add_argument('skills', type=list, location='json')
+        parser.add_argument('personality', type=str)
+        parser.add_argument('timeCommitment', type=int)
+        parser.add_argument('userid', type=str)
+
+        args = parser.parse_args()
+        userid = ObjectId(userid)
+
+        result = mongo.db.users.update_one(
+            {'_id': userid},
+            {
+                '$set': {
+                    'skills': args.get('skills', []),
+                    'personality': args.get('personality', ''),
+                    'timeCommitment': args.get('timeCommitment', 0),
+                }
+            }
+        )
+
+        if result.modified_count > 0:
+            return {'message': 'User profile updated successfully'}, 200
+        else:
+            return {'message': 'User not found or no changes made'}, 404
+
+
+
+api.add_resource(EditProfile, '/edit-user/<string:userid>')
 
 
 

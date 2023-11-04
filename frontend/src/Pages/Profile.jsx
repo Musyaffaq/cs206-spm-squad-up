@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import React from "react";
 import { useParams } from "react-router-dom";
+import ProfileViewComponent from "../Components/ProfileViewComponent";
 
 function Profile() {
   const [data, setData] = useState([]);
@@ -13,7 +14,11 @@ function Profile() {
         setData(data);
       });
   }, []);
-  return <div>Profile userid: {userid}</div>;
+  return (
+    <>
+      <ProfileViewComponent userId={userid} />
+    </>
+  );
 }
 
 export default Profile;

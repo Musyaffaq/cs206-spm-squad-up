@@ -39,6 +39,7 @@ function Filter({ updateUserData }) {
         headers,
       });
       updateUserData(response.data["usersList"]);
+      // console.log(response.data["usersList"]);
 
       // Redirect or perform other actions as needed.
     } catch (error) {
