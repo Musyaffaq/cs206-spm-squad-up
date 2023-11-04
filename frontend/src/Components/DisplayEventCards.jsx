@@ -15,18 +15,32 @@ const eventDataList = [
   {
     title: 'LIT Hackathon',
     image: 'LIT_Hack.png',
-    information: 'Information for Event 1',
+    information: 'Organised by SMU\'s LIT Club...',
   },
   {
     title: 'Citi HackOverflow',
     image: 'Citi_Hack.png',
-    information: 'Information for Event 2',
+    information: 'Citi Bank\'s premier hackathon...',
   },
   {
     title: 'SG-IN Hackathon',
     image: 'G20_Hack.png',
-    information: 'Information for Event 3',
+    information: 'NTU Singapore in partnership with ...',
   },
+];
+
+const eventDataList2 = [
+  {
+    title: 'Ellipsis Tech Series',
+    image: 'Ellipsis_Hack.png',
+    information: 'Ellipsis presents our annual...',
+  },
+  {
+    title: 'Technica Hackathon',
+    image: 'Technica_Hack.png',
+    information: 'The world\'s largest hackathon...',
+  },
+
 ];
 
 
