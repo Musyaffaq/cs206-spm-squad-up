@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { useParams } from "react-router-dom";
 import ProfileViewComponent from "../Components/ProfileViewComponent";
+import BackToFindMember from "../Components/DisplaySquad/BackToFindMember";
 import API_LINK from "../Api";
 
 function Profile() {
@@ -17,6 +18,7 @@ function Profile() {
   }, []);
   return (
     <>
+      <BackToFindMember />
       <ProfileViewComponent userId={userid} />
     </>
   );
