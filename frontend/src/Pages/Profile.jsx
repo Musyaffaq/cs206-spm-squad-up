@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import React from "react";
 import { useParams } from "react-router-dom";
 import ProfileViewComponent from "../Components/ProfileViewComponent";
+import BackToFindMember from "../Components/DisplaySquad/BackToFindMember";
 
 function Profile() {
   const [data, setData] = useState([]);
@@ -16,6 +17,7 @@ function Profile() {
   }, []);
   return (
     <>
+      <BackToFindMember />
       <ProfileViewComponent userId={userid} />
     </>
   );

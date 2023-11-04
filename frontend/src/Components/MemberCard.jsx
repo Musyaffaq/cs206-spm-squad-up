@@ -1,30 +1,33 @@
 import React from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
   Grid,
   Typography,
-  Button,
   CardActionArea,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 import InviteButton from "./InviteButton";
+import MemberCardSkills from "./MemberCardSkills";
 
 const circleContainer = {
-  width: "130px",
-  height: "130px",
+  width: "8em",
+  height: "8em",
   alignItems: "center",
   overflow: "hidden",
   display: "flex",
   borderRadius: "50%",
-  marginTop: "5px",
+  marginTop: "3.5em",
+  marginRight: "1.8em",
 };
 
 const cardStyles = {
-  width: "330px",
+  width: "23em",
   alignItems: "center",
   justifyContent: "center",
-  flexwrap: "wrap",
-  marginRight: "10px",
+  flexWrap: "wrap",
+  marginRight: "1em",
 };
 
 const contentStyle = {
@@ -32,49 +35,81 @@ const contentStyle = {
   flexDirection: "row",
   alignItems: "center", // Center horizontally
   justifyContent: "center", // Center vertically
-  height: "16vh", // Full viewport height
+  height: "19vh", // Full viewport height
+};
+
+const linkStyle = {
+  color: "inherit",
+  textDecoration: "none", // Remove underline
 };
 
 function MemberCard({ memberData }) {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    fetch(`http://localhost:5000/get-user/${memberData.userid}`)
+      .then((res) => res.json()) // Parse the response as JSON
+      .then((data) => {
+        console.log(data);
+        setData(data);
+      });
+  }, []);
   return (
-    <CardActionArea>
-      <Grid item xs={2.5}>
-        <Card style={cardStyles}>
-          <CardContent style={contentStyle}>
-            <CardContent>
-              <img
-                src= "/person0.jpg"
-                style={circleContainer}
-                alt={memberData.username}
-              />
+    <Grid item xs={2.5}>
+      <Card style={cardStyles}>
+        <Link to={`/profiles/${memberData.userid}`} style={linkStyle}>
+          <CardActionArea>
+            <CardContent style={contentStyle}>
+              <div style={{ marginRight: "1.5em" }}>
+                <br />
+                <img
+                  src="/default_profile.jpg"
+                  style={circleContainer}
+                  alt={memberData.username}
+                />
+              </div>
+              <div>
+                <br />
+                <br />
+                <Typography
+                  style={{ textDecoration: "underline", marginBottom: "2px", marginTop: "3em" }}
+                >
+                  Username:
+                </Typography>
+                <Typography style={{ marginBottom: "6px" }}>
+                  {memberData.username}
+                </Typography>
+                <Typography
+                  style={{ textDecoration: "underline", marginBottom: "2px" }}
+                >
+                  Personality:
+                </Typography>
+                <Typography style={{ marginBottom: "6px" }}>
+                  {memberData.personality}
+                </Typography>
+                <Typography
+                  style={{ textDecoration: "underline", marginBottom: "2px" }}
+                >
+                  Skills:
+                </Typography>
+                <MemberCardSkills Skills={memberData.skills} />
+              </div>
             </CardContent>
-
-            <CardContent style={{ marginTop: "50px" }}>
-              <Typography>Username: </Typography>
-              <Typography>{memberData.username}</Typography>
-              <Typography>Personality: </Typography>
-              <Typography>{memberData.personality}</Typography>
-              <Typography>Skills:</Typography>
-              <Typography>{memberData.skills.join(", ")}</Typography>
+            <br />
+            <br />
+            <CardContent
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginTop: "2.8em",
+              }}
+            >
+              <InviteButton memberName={memberData.username} />
             </CardContent>
-          </CardContent>
-          {/* <CardActions style={{ marginLeft: "20px" }}>
-            <Button size="small">Invite to Group</Button>
-          </CardActions> */}
-          <br />
-          <br />
-          <CardContent
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-            }}
-          >
-            <InviteButton memberName={memberData.username} />
-          </CardContent>
-        </Card>
-      </Grid>
-    </CardActionArea>
+          </CardActionArea>
+        </Link>
+      </Card>
+    </Grid>
   );
 }
 
