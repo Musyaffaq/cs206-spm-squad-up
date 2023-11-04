@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import LIT from '../Image/LIT.png';
+import ImageMapper from './ImageMapper';
 import {
     Card,
     CardContent,
@@ -10,15 +10,16 @@ import {
     Button,
   } from "@mui/material";
 
-  
 
 
-function ImageCard() {
+
+function ImageCard({Event}) {
     return (
         <Card variant="plain" sx= {{ width: 850 }}>
-                    <img
-                        src={LIT} style = {{width: 850, height: 660}}
-                    />
+            <div>
+                <ImageMapper inputString={Event} />
+            </div>
+
         </Card>
     )
 }

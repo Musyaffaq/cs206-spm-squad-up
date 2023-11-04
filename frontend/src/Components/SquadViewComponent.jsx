@@ -49,12 +49,36 @@ const SquadViewComponent = () => {
   const [personality, setPersonality] = useState("");
   const [confirmedMembers, setConfirmedMembers] = useState([]);
 
+const SquadViewComponent = () => {
+  const { squadid } = useParams(); // this is the username
+  useEffect(() => {
+    fetch(`http://localhost:5000/get-squad/${squadid}`)
+      .then((res) => res.json()) // Parse the response as JSON
+      .then((data) => {
+        setSquadName(data.squad.squadName);
+        setEventName(data.squad.eventName);
+        setSkillsRequired(data.squad.skillsRequired);
+        setFromDate(data.squad.fromDate.slice(5, 16));
+        setToDate(data.squad.toDate.slice(5, 16));
+        setTimeCommitment(data.squad.timeCommitment);
+        setPersonality(data.squad.personality);
+        setConfirmedMembers(data.squad.confirmedMembers);
+      });
+  }, []);
+  const [confirmedMembers, setConfirmedMembers] = useState([]);
+  const [personality, setPersonality] = useState("");
+  const [timeCommitment, setTimeCommitment] = useState(0);
+  const [toDate, setToDate] = useState("");
+  const [fromDate, setFromDate] = useState("");
+  const [skillsRequired, setSkillsRequired] = useState([]);
+  const [eventName, setEventName] = useState("");
+  const [squadName, setSquadName] = useState("");
   return (
     <div className="group-view">
       <h1>{squadName}</h1>
       <h2>{eventName}</h2>
 
-      <ImageCard />
+      <ImageCard Event = {eventName} />
 
       <div className="group-info">
         <h2>Group Information</h2>
