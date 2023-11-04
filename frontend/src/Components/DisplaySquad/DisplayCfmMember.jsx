@@ -1,5 +1,8 @@
 import React from "react";
-import { Card, CardContent, Typography, Chip } from "@mui/material";
+import Grid from "@mui/material/Grid";
+import { Card, CardContent, Typography, Chip, Button } from "@mui/material";
+import { Link } from "react-router-dom";
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const circleContainer = {
   width: "80px",
@@ -23,9 +26,17 @@ function DisplayCfmMember({ ConfirmedMembers }) {
   return (
     <Card variant="outlined">
       <CardContent>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          
         <Typography variant="h6" style={{ textDecoration: "underline" }}>
           Confirmed Members:
         </Typography>
+          <div style = {{textAlign: 'left'}}>
+          <Link to="/findmember">
+              <Button  variant="outlined"  endIcon = {<AddCircleIcon />}> Add </Button >
+          </Link>
+          </div>
+        </div>
         <div style={imageRowContainer}>
           {ConfirmedMembers.map((member, index) => (
             <div key={index}>
