@@ -8,8 +8,6 @@ import Grid from "@mui/material/Unstable_Grid2";
 import ImageCard from "./ImageCard";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import DisplayAttributeCards from './DisplayAttributeCards';
-import DisplayAttributeCards from './DistributeAttributeCards';
 
 const SquadViewComponent = () => {
   const { squadid } = useParams(); // this is the username
