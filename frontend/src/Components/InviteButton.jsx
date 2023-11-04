@@ -22,6 +22,7 @@ function InviteButton({ memberName, userId }) {
   };
 
   useEffect(() => {
+    console.log(memberName);
     currUsername = sessionStorage.getItem("username");
     fetch(API_LINK + `get-user/${userId}`)
       .then((res) => res.json()) // Parse the response as JSON

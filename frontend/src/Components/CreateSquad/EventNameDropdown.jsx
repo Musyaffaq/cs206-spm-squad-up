@@ -26,6 +26,7 @@ export default function BasicSelect({ updateEventName }) {
             Ellipsis Tech Series 2023
           </MenuItem>
           <MenuItem value={"CodeSprint 2023"}>CodeSprint 2023</MenuItem>
+          <MenuItem value={"Technica 2023"}>Technica 2023</MenuItem>
         </Select>
       </FormControl>
     </Box>

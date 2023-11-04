@@ -61,7 +61,7 @@ const ProfileViewComponent = ({ userId }) => {
         <h2>User Information</h2>
         <Grid container spacing={2}>
           <Grid xs={6}>
-            <DisplayPersonality Personality={personality} />
+            <DisplayPersonality Personality={personality} type="profile" />
           </Grid>
           <Grid xs={6}>
             <DisplayTimeCommitment TimeCommitment={timeCommitment} />
