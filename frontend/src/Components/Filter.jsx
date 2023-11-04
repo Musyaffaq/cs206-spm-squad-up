@@ -11,7 +11,7 @@ function Filter({ updateUserData }) {
   const [filter, setFilter] = useState("");
   const [skills, setSkills] = useState([]);
   const [commitmentLevel, setCommitmentLevel] = useState(5);
-  const [personality, setPersonality] = useState("");
+  const [personality, setPersonality] = useState([]);
 
   const updateSkills = (newValue) => {
     setSkills(newValue);
@@ -57,7 +57,7 @@ function Filter({ updateUserData }) {
       <br></br>
       <SkillsDropdown updateSkills={updateSkills} />
       <br></br>
-      <Personality updatePersonality={updatePersonality} />
+      <Personality updatePersonality={updatePersonality} type="squad" />
       <br></br>
       <Button variant="contained" onClick={handleFilter}>
         Filter

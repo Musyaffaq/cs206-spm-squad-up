@@ -13,7 +13,7 @@ import API_LINK from "../Api";
 function EditProfile() {
   const [skills, setSkills] = useState([]);
   const [personality, setPersonality] = useState("");
-  const [timeCommitment, setTimeCommitment] = useState(0);
+  const [timeCommitment, setTimeCommitment] = useState(5);
   const navigate = useNavigate();
   const userid = sessionStorage.getItem("userid");
 
@@ -57,7 +57,7 @@ function EditProfile() {
       <form>
         <Grid container spacing={4}>
           <Grid item xs={16}>
-            <Personality updatePersonality={updatePersonality} />
+            <Personality updatePersonality={updatePersonality} type="profile" />
           </Grid>
           <Grid item xs={16}>
             <SkillsDropdown updateSkills={updateSkills} />

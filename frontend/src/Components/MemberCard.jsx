@@ -71,7 +71,11 @@ function MemberCard({ memberData }) {
                 <br />
                 <br />
                 <Typography
-                  style={{ textDecoration: "underline", marginBottom: "2px", marginTop: "3em" }}
+                  style={{
+                    textDecoration: "underline",
+                    marginBottom: "2px",
+                    marginTop: "3em",
+                  }}
                 >
                   Username:
                 </Typography>
@@ -96,18 +100,18 @@ function MemberCard({ memberData }) {
             </CardContent>
             <br />
             <br />
-            <CardContent
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                marginTop: "2.8em",
-              }}
-            >
-              <InviteButton memberName={memberData.username} />
-            </CardContent>
           </CardActionArea>
         </Link>
+        <CardContent
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: "2.8em",
+          }}
+        >
+          <InviteButton memberName={memberData.username} />
+        </CardContent>
       </Card>
     </Grid>
   );

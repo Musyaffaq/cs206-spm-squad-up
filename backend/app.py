@@ -84,7 +84,7 @@ class CreateSquad(Resource):
         parser.add_argument('fromDate', type=str, required=True)  # Assuming the date is passed as a string
         parser.add_argument('toDate', type=str, required=True)  # Assuming the date is passed as a string
         parser.add_argument('timeCommitment', type=int, required=True)
-        parser.add_argument('personality', type=str, required=True)
+        parser.add_argument('personality', type=str, action='append', required=True)
 
         args = parser.parse_args()
 
@@ -105,7 +105,7 @@ class CreateSquad(Resource):
             'fromDate': from_date,
             'toDate': to_date,
             'timeCommitment': args.get('timeCommitment', 0),
-            'personality': args.get('personality', ''),
+            'personality': args.get('personality', []),
             'confirmedMembers': [],
             'invitedMembers': [],
         }
@@ -143,7 +143,7 @@ def GetAllUsers():
 class Filter(Resource):
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('personality', type=str, required=True)
+        parser.add_argument('personality', type=str, action='append', required=True)
         parser.add_argument('timeCommitment', type=int, required=True)
         parser.add_argument('skillsRequired', type=str, action='append', required=True)
 
@@ -153,9 +153,9 @@ class Filter(Resource):
         skills_required = args['skillsRequired']
 
         users = list(mongo.db.users.find({
-            'personality': personality,
+            'personality': {"$in": personality},
             'timeCommitment': time_commitment,
-            'skills': {"$in" : skills_required}
+            'skills': {"$in": skills_required}
         }))
 
         usersList = []

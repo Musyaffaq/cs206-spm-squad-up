@@ -14,7 +14,7 @@ import './DisplayEventCards.css';
 const eventDataList = [
   {
     title: 'LIT Hackathon',
-    image: 'Lit_Hack.png',
+    image: 'LIT_Hack.png',
     information: 'Information for Event 1',
   },
   {

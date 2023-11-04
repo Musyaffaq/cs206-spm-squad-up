@@ -27,7 +27,7 @@ const SquadViewComponent = () => {
       });
   }, []);
   const [confirmedMembers, setConfirmedMembers] = useState([]);
-  const [personality, setPersonality] = useState("");
+  const [personality, setPersonality] = useState([]);
   const [timeCommitment, setTimeCommitment] = useState(0);
   const [toDate, setToDate] = useState("");
   const [fromDate, setFromDate] = useState("");
@@ -48,7 +48,7 @@ const SquadViewComponent = () => {
             <DisplayPersonality Personality={personality} />
           </Grid>
           <Grid xs={6}>
-            <DisplaySkills Skills={skillsRequired} />
+            <DisplaySkills Skills={skillsRequired} type="squad" />
           </Grid>
           <Grid xs={6}>
             <DisplayDates FromDate={fromDate} ToDate={toDate} />

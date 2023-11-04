@@ -26,13 +26,38 @@ export default function SkillsDropdown({ updateSkills }) {
   );
 }
 
-// Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top
-// const skills = [
-//   { skill: "Python", value: "python" },
-//   { skill: "JavaScript", value: "javascript" },
-//   { skill: "Java", value: "java" },
-//   { skill: "React", value: "react" },
-//   { skill: "SQL", value: "sql" },
-//   { skill: "MongoDB", value: "mongodb" },
-// ];
-const skills = ["Python", "JavaScript", "Java", "React", "SQL", "MongoDB"];
+const skills = [
+  "Python",
+  "JavaScript",
+  "Java",
+  "React",
+  "SQL",
+  "MongoDB",
+  "Presentation",
+  "Slides",
+  "Report Writing",
+  "Project Management",
+  "Communication Skills",
+  "Teamwork",
+  "Problem-Solving",
+  "Adaptability",
+  "Leadership",
+  "Time Management",
+  "Organizational Skills",
+  "Analytical Skills",
+  "Technical Skills",
+  "Customer Service",
+  "Creativity",
+  "Sales and Marketing",
+  "Financial Literacy",
+  "Networking",
+  "Emotional Intelligence",
+  "C++",
+  "Ruby",
+  "HTML/CSS",
+  "Angular",
+  "Vue.js",
+  "Node.js",
+  "Django",
+  "Ruby on Rails",
+];

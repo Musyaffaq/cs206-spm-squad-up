@@ -21,7 +21,7 @@ function CreateSquad() {
   const [datesFrom, setDatesFrom] = useState("");
   const [datesTo, setDatesTo] = useState("");
   const [commitmentLevel, setCommitmentLevel] = useState(5);
-  const [personality, setPersonality] = useState("");
+  const [personality, setPersonality] = useState([]);
   const navigate = useNavigate();
   const username = sessionStorage.getItem("username");
 
@@ -119,7 +119,7 @@ function CreateSquad() {
             />
           </Grid>
           <Grid item xs={12}>
-            <Personality updatePersonality={updatePersonality} />
+            <Personality updatePersonality={updatePersonality} type="squad" />
           </Grid>
           <Grid item x={12} align="center">
             <Button variant="contained" onClick={handleCreateSquad}>
