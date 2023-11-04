@@ -5,7 +5,7 @@ import {
   Grid,
   Typography,
   Button,
-  CardActions,
+  CardActionArea,
 } from "@mui/material";
 import InviteButton from "./InviteButton";
 
@@ -37,13 +37,13 @@ const contentStyle = {
 
 function MemberCard({ memberData }) {
   return (
-    <>
+    <CardActionArea>
       <Grid item xs={2.5}>
         <Card style={cardStyles}>
           <CardContent style={contentStyle}>
             <CardContent>
               <img
-                src={memberData.dP}
+                src= "/person0.jpg"
                 style={circleContainer}
                 alt={memberData.username}
               />
@@ -74,7 +74,7 @@ function MemberCard({ memberData }) {
           </CardContent>
         </Card>
       </Grid>
-    </>
+    </CardActionArea>
   );
 }
 
