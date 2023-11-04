@@ -13,20 +13,34 @@ import './DisplayEventCards.css';
 
 const eventDataList = [
   {
-    title: 'LIT Hackathon',
+    title: 'LIT Hackathon 2023',
     image: 'Lit_Hack.png',
-    information: 'Information for Event 1',
+    information: 'Organised by SMU\'s LIT Club...',
   },
   {
-    title: 'Citi HackOverflow',
+    title: 'Citi HackOverflow 2023',
     image: 'Citi_Hack.png',
-    information: 'Information for Event 2',
+    information: 'Citi Bank\'s premier hackathon...',
   },
   {
-    title: 'SG-IN Hackathon',
+    title: 'SG-IN Hackathon 2023',
     image: 'G20_Hack.png',
-    information: 'Information for Event 3',
+    information: 'NTU Singapore in partnership with ...',
   },
+];
+
+const eventDataList2 = [
+  {
+    title: 'Ellipsis Tech Series 2023',
+    image: 'Ellipsis_Hack.png',
+    information: 'Ellipsis presents our annual...',
+  },
+  {
+    title: 'Technica Hackathon 2023',
+    image: 'Technica_Hack.png',
+    information: 'The world\'s largest hackathon...',
+  },
+
 ];
 
 
