@@ -11,6 +11,7 @@ import FromDateDropdown from "../Components/CreateSquad/FromDateDropdown";
 import Personality from "../Components/CreateSquad/Personality";
 import { Button } from "@mui/material";
 import axios from "axios";
+import API_LINK from "../Api";
 
 function CreateSquad() {
   // Event Type, Event Name, Group Name, Skills required, Dates Required (from and to), commitment level
@@ -42,13 +43,9 @@ function CreateSquad() {
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/create-squad",
-        data,
-        {
-          headers,
-        }
-      );
+      const response = await axios.post(API_LINK + `create-squad`, data, {
+        headers,
+      });
 
       // Successful login
       console.log(response.data.squadid);

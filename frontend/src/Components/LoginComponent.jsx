@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Container, Paper, Typography, TextField, Button } from "@mui/material";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import API_LINK from "../Api";
 
 function LoginComponent() {
   const [username, setUsername] = useState("");
@@ -20,7 +21,7 @@ function LoginComponent() {
     };
 
     try {
-      const response = await axios.post("http://localhost:5000/login", data, {
+      const response = await axios.post(API_LINK + `login`, data, {
         headers,
       });
 

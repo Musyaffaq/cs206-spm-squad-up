@@ -8,11 +8,12 @@ import Grid from "@mui/material/Unstable_Grid2";
 import ImageCard from "./ImageCard";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import API_LINK from "../Api";
 
 const SquadViewComponent = () => {
   const { squadid } = useParams(); // this is the username
   useEffect(() => {
-    fetch(`http://localhost:5000/get-squad/${squadid}`)
+    fetch(API_LINK + `get-squad/${squadid}`)
       .then((res) => res.json()) // Parse the response as JSON
       .then((data) => {
         setSquadName(data.squad.squadName);

@@ -9,6 +9,8 @@ import { useParams, Link } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 import InviteButton from "./InviteButton";
 
+import API_LINK from "../Api";
+
 const circleContainer = {
   width: "150px",
   height: "150px",
@@ -27,7 +29,7 @@ const ProfileViewComponent = ({ userId }) => {
   const [timeCommitment, setTimeCommitment] = useState(0);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/get-user/${userId}`)
+    fetch(API_LINK + `get-user/${userId}`)
       .then((res) => res.json()) // Parse the response as JSON
       .then((data) => {
         setUsername(data.user.username);
