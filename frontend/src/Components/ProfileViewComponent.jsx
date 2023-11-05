@@ -22,6 +22,14 @@ const ProfileContainer = {
   marginRight: "5px",
 };
 
+const usernameToImage = {
+  "Lauren": "/lauren.jpg",
+  "Zhiyi": "/zhiyi.jpg",
+  "Eugene": "/eugene.jpg",
+  "Mush": "/mush.jpg",
+  "Leann": "/leann.jpg",
+};
+
 const ProfileViewComponent = ({ userId }) => {
   const [isInvited, setIsInvited] = useState(false);
   const [username, setUsername] = useState("");
@@ -63,7 +71,7 @@ const ProfileViewComponent = ({ userId }) => {
         )}
       </div>
 
-      <img src="/default_profile.jpg" style={ProfileContainer} alt="image" />
+      <img src={usernameToImage[username] || "/default_profile.jpg"} style={ProfileContainer} alt="image" />
       <div className="group-info">
         <h2>User Information</h2>
         <Grid container spacing={2}>
