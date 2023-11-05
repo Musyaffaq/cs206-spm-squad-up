@@ -107,7 +107,7 @@ function MemberCard({ memberData }) {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            marginTop: "2.8em",
+            marginTop: "1em",
           }}
         >
           <InviteButton memberName={memberData.username} />

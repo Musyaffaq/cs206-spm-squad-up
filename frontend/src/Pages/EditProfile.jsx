@@ -33,6 +33,8 @@ function EditProfile() {
 
     // Successful login
     navigate(`/profiles/` + userid);
+    sessionStorage.setItem("personality", personality);
+
   };
 
   const updateSkills = (newValue) => {

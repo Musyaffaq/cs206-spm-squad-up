@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Container, Paper, Typography, TextField, Button } from "@mui/material";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
@@ -31,10 +30,16 @@ function LoginComponent() {
         sessionStorage.setItem("token", result.token);
         sessionStorage.setItem("username", username);
         sessionStorage.setItem("userid", result.userid);
+        sessionStorage.setItem("personality", result.personality);
       })
       .then(() => {
         navigate("/");
       });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleLogin();
   };
 
   return (
@@ -43,7 +48,7 @@ function LoginComponent() {
         <Typography variant="h4" align="center" gutterBottom>
           Login
         </Typography>
-        <form>
+        <form onSubmit={handleSubmit}>
           <TextField
             label="Username"
             fullWidth
@@ -62,10 +67,10 @@ function LoginComponent() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <Button
+            type="submit" 
             variant="contained"
             color="primary"
             fullWidth
-            onClick={handleLogin}
           >
             Log In
           </Button>
