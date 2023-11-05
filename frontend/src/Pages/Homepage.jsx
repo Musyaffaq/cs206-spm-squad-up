@@ -47,7 +47,7 @@ function Homepage() {
         ) }
         </Grid>
         <Grid item xs={12}>
-          <Typography variant="h5">Your Groups</Typography>
+          <Typography variant="h5">Available Squads</Typography>
         </Grid>
         <DisplayGroupCards />
         <Grid item xs={12}>
