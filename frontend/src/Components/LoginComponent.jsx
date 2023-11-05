@@ -20,22 +20,21 @@ function LoginComponent() {
       "Content-Type": "application/json",
     };
 
-    try {
-      const response = await axios.post(API_LINK + `login`, data, {
-        headers,
+    fetch(API_LINK + `login`, {
+      method: "POST",
+      headers: headers,
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        sessionStorage.setItem("token", result.token);
+        sessionStorage.setItem("username", username);
+        sessionStorage.setItem("userid", result.userid);
+      })
+      .then(() => {
+        navigate("/");
       });
-
-      // Successful login
-      sessionStorage.setItem("token", response.data.token);
-      sessionStorage.setItem("username", username);
-      sessionStorage.setItem("userid", response.data.userid);
-      navigate("/");
-
-      // Redirect or perform other actions as needed.
-    } catch (error) {
-      // Handle login error
-      console.error("Login failed", error);
-    }
   };
 
   return (
