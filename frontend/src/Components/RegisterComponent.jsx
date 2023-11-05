@@ -62,13 +62,18 @@ function RegisterComponent() {
     }
   };
 
+      const handleSubmit = (e) => {
+      e.preventDefault();
+      handleLogin();
+    };
+
   return (
     <Container maxWidth="xs">
       <Paper elevation={3} style={{ padding: "2rem", marginTop: "2rem" }}>
         <Typography variant="h4" align="center" gutterBottom>
           Sign Up
         </Typography>
-        <form>
+        <form onSubmit={handleSubmit}>
           <TextField
             label="Username"
             fullWidth
@@ -88,6 +93,7 @@ function RegisterComponent() {
           />
           <Button
             variant="contained"
+            type="submit" 
             color="primary"
             fullWidth
             onClick={handleLogin}

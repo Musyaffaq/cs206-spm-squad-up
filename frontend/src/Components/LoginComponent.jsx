@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Container, Paper, Typography, TextField, Button } from "@mui/material";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
@@ -38,13 +37,18 @@ function LoginComponent() {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleLogin();
+  };
+
   return (
     <Container maxWidth="xs">
       <Paper elevation={3} style={{ padding: "2rem", marginTop: "2rem" }}>
         <Typography variant="h4" align="center" gutterBottom>
           Login
         </Typography>
-        <form>
+        <form onSubmit={handleSubmit}>
           <TextField
             label="Username"
             fullWidth
@@ -63,10 +67,10 @@ function LoginComponent() {
             onChange={(e) => setPassword(e.target.value)}
           />
           <Button
+            type="submit" 
             variant="contained"
             color="primary"
             fullWidth
-            onClick={handleLogin}
           >
             Log In
           </Button>
