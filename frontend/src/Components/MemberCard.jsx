@@ -43,6 +43,14 @@ const linkStyle = {
   textDecoration: "none", // Remove underline
 };
 
+const usernameToImage = {
+  "Lauren": "/lauren.jpg",
+  "Zhiyi": "/zhiyi.jpg",
+  "Eugene": "/eugene.jpg",
+  "Mush": "/mush.jpg",
+  "Leann": "/leann.jpg",
+};
+
 function MemberCard({ memberData }) {
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -62,7 +70,7 @@ function MemberCard({ memberData }) {
               <div style={{ marginRight: "1.5em" }}>
                 <br />
                 <img
-                  src="/default_profile.jpg"
+                  src={usernameToImage[memberData.username] || "/default_profile.jpg"}
                   style={circleContainer}
                   alt={memberData.username}
                 />
@@ -107,7 +115,7 @@ function MemberCard({ memberData }) {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            marginTop: "1em",
+            marginTop: "2em",
           }}
         >
           <InviteButton memberName={memberData.username} />

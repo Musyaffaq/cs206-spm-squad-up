@@ -2,7 +2,7 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 import { useState } from "react";
 import { Typography } from "@mui/material";
-import SkillsDropdown from "../Components/CreateSquad/SkillsDropdown";
+import SkillsDropdownEdit from "../Components/SkillsDropdownEdit";
 import TimeCommitmentDropdown from "../Components/CreateSquad/TimeCommitmentDropdown";
 import Personality from "../Components/CreateSquad/Personality";
 import { Button } from "@mui/material";
@@ -62,7 +62,7 @@ function EditProfile() {
             <Personality updatePersonality={updatePersonality} type="profile" />
           </Grid>
           <Grid item xs={16}>
-            <SkillsDropdown updateSkills={updateSkills} />
+            <SkillsDropdownEdit updateSkills={updateSkills} />
           </Grid>
           <Grid item xs={16} align="center">
             <TimeCommitmentDropdown

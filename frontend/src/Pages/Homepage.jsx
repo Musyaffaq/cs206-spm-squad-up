@@ -32,23 +32,15 @@ function Homepage() {
           <HomepageStatus />
         </Grid>
         <Grid item xs={2}>
-          {personality !== "undefined" && personality !== "null" ? (
-            <Link to="/squads/create">
-              <Button
-                variant="contained"
-                color="success"
-                endIcon={<GroupAddIcon />}
-              >
-                SquadUp!
-              </Button>
-            </Link>
-          ) : (
-            <Link to="/profiles/edit">
-              <Button size="small" variant="outlined">
-                Create Profile
-              </Button>
-            </Link>
-          )}
+          {(personality !== "undefined" && personality !== null)? (
+          <Link to="/squads/create">
+          <Button variant="contained" color="success" endIcon={<GroupAddIcon />}>SquadUp!</Button>
+          </Link>
+        ):(
+          <Link to="/profiles/edit">
+          <Button size="small"  variant="outlined">Create Profile</Button>
+          </Link>
+        ) }
         </Grid>
         <Grid item xs={12}>
           <Typography variant="h5">Your Groups</Typography>
