@@ -28,7 +28,7 @@ function FindMember() {
         <BackToSquad squadid = {response1} />
         <Grid item xs={12}>
           <Typography variant="h4" align="left" gutterBottom>
-            Create Squad
+            Find Member
           </Typography>
         </Grid>
         <Filter updateUserData={updateUserData} />

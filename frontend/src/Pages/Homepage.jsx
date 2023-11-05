@@ -2,17 +2,15 @@ import Grid from "@mui/material/Grid";
 import React from "react";
 import HomepageStatus from "../Components/HomepageStatus";
 import { Button, Typography } from "@mui/material";
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import DisplayGroupCards from "../Components/DisplayGroupCards";
 import DisplayEventCards from "../Components/DisplayEventCards";
 import { Link, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import API_LINK from "../Api";
 
-
-
 function Homepage() {
-  const { userid } = useParams()
+  const { userid } = useParams();
   // const [personality, setPersonality] = useState("");
   const personality = sessionStorage.getItem("personality");
 
