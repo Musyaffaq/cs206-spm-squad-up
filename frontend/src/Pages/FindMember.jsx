@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, CardActionArea, CardContent, Grid } from "@mui/material";
 import MemberCard from "../Components/MemberCard";
 import Filter from "../Components/Filter";
+import { Typography } from "@mui/material";
 
 function FindMember() {
   const [showFilter, setShowFilter] = useState(false);
@@ -14,10 +15,15 @@ function FindMember() {
   return (
     <>
       <div>
-        <Button variant="outlined" onClick={() => setShowFilter(!showFilter)}>
+        {/* <Button variant="outlined" onClick={() => setShowFilter(!showFilter)}>
           {showFilter ? "Hide Filter" : "Show Filter"}
-        </Button>
-        {showFilter && <Filter updateUserData={updateUserData} />}
+        </Button> */}
+        <Grid item xs={12}>
+          <Typography variant="h4" align="left" gutterBottom>
+            Create Squad
+          </Typography>
+        </Grid>
+        <Filter updateUserData={updateUserData} />
       </div>
       <div className="display-event-card">
         {userData.map((memberData, index) => {

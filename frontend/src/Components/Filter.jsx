@@ -53,11 +53,11 @@ function Filter({ updateUserData }) {
   return (
     <div>
       <br></br>
-      <TimeCommitmentDropdown updateTimeCommitment={updateTimeCommitment} />
-      <br></br>
       <SkillsDropdown updateSkills={updateSkills} />
       <br></br>
       <Personality updatePersonality={updatePersonality} type="squad" />
+      <br></br>
+      <TimeCommitmentDropdown updateTimeCommitment={updateTimeCommitment} />
       <br></br>
       <Button variant="contained" onClick={handleFilter}>
         Filter
