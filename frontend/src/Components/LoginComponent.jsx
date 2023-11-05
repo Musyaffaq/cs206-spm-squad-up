@@ -26,7 +26,7 @@ function LoginComponent() {
     })
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
+        console.log("hi", result);
         sessionStorage.setItem("token", result.token);
         sessionStorage.setItem("username", username);
         sessionStorage.setItem("userid", result.userid);
