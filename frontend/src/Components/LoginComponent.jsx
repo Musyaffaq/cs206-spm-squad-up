@@ -30,7 +30,7 @@ function LoginComponent() {
         sessionStorage.setItem("token", result.token);
         sessionStorage.setItem("username", username);
         sessionStorage.setItem("userid", result.userid);
-        sessionStorage.setItem("personality", response.data.personality);
+        sessionStorage.setItem("personality", result.personality);
       })
       .then(() => {
         navigate("/");
