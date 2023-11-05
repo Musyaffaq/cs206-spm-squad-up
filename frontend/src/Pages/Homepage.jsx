@@ -33,14 +33,13 @@ function Homepage() {
         </Grid>
         <Grid item xs={2}>
 
-          {personality !== "undefined" ? (
-          <Link to="/profiles/edit">
-          <Button variant="outlined">Create Profile</Button>
-          </Link>
-        ) : (
-
+          {personality == "undefined" ? (
           <Link to="/squads/create">
           <Button variant="contained" color="success" endIcon={<GroupAddIcon />}>SquadUp!</Button>
+          </Link>
+        ) : (
+          <Link to="/profiles/edit">
+          <Button size="small"  variant="outlined">Create Profile</Button>
           </Link>
         )}
         </Grid>
