@@ -1,5 +1,7 @@
 # CS206 - Software Product Management - Squad Up
 
+[You can test this live here](https://cs206-spm-squad-up.vercel.app/)
+
 ## Setting up the project
 1. Clone this repository onto your local machine.
 1. From the root folder, `cd backend` into the backend folder.
