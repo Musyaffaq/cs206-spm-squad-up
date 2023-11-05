@@ -34,7 +34,7 @@ function Homepage() {
           <HomepageStatus />
         </Grid>
         <Grid item xs={2}>
-          {personality !== "undefined" ? (
+          {(personality !== "undefined" && personality !== null)? (
           <Link to="/squads/create">
           <Button variant="contained" color="success" endIcon={<GroupAddIcon />}>SquadUp!</Button>
           </Link>
