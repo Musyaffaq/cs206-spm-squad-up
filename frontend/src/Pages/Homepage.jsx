@@ -29,7 +29,11 @@ function Homepage() {
     <>
       <Grid container spacing={2}>
         <Grid item xs={10}>
+        {(personality !== "undefined" && personality !== null)? (
+          <br/>
+        ):(
           <HomepageStatus />
+        ) }
         </Grid>
         <Grid item xs={2}>
           {(personality !== "undefined" && personality !== null)? (

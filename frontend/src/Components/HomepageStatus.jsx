@@ -5,7 +5,7 @@ function HomepageStatus() {
   return (
     <Alert severity="info">
       <AlertTitle>Status</AlertTitle>
-      You can view your group as well as which group to join here!
+      You have not created your profile yet, please create one to get started!
     </Alert>
   );
 }
