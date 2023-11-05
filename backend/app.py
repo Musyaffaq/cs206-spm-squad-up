@@ -69,7 +69,7 @@ class Login(Resource):
             access_token = create_access_token(identity=user['username'])
 
             # Return the Bearer token in the response
-            return {'token': access_token, 'token_type': 'Bearer', 'userid': str(user['_id'])}
+            return {'token': access_token, 'token_type': 'Bearer', 'userid': str(user['_id']), 'personality':user['personality'], 'timeCommitment':user['timeCommitment']}, 200
 
         return {'message': 'Invalid username or password'}, 401
 
