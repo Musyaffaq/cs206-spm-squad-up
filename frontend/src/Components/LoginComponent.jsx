@@ -28,6 +28,7 @@ function LoginComponent() {
       sessionStorage.setItem("token", response.data.token);
       sessionStorage.setItem("username", username);
       sessionStorage.setItem("userid", response.data.userid);
+      sessionStorage.setItem("personality", response.data.personality);
       navigate("/");
 
       // Redirect or perform other actions as needed.

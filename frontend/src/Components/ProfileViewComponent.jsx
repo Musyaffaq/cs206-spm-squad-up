@@ -7,6 +7,8 @@ import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 import InviteButton from "./InviteButton";
+import BackToFindMember from "../Components/DisplaySquad/BackToFindMember";
+import BackToHome from "../Components/DisplaySquad/BackToHome";
 
 import API_LINK from "../Api";
 
@@ -43,6 +45,11 @@ const ProfileViewComponent = ({ userId }) => {
 
   return (
     <div className="group-view">
+          {username !== sessionStorage.getItem("username") ? (
+          <BackToFindMember />
+        ) : (
+            <BackToHome/>
+        )}
       <div
         style={{ display: "flex", alignItems: "center", marginTop: "-26px" }}
       >
